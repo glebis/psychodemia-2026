@@ -1,0 +1,7 @@
+# Layer 1 (Natasha — Russian NER). Pure-pip deps.
+natasha
+setuptools
+pymorphy2-dicts-ru
+# Layer 2 (OpenAI Privacy Filter) is NOT on PyPI — installed from source by setup.sh
+#   (git clone https://github.com/openai/privacy-filter && pip install -e .) → provides the `opf` CLI.
+# Layer 3 (Ollama) is a system install (https://ollama.com) + `ollama pull qwen2.5:3b`.

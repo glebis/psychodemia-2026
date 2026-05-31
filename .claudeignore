@@ -1,0 +1,7 @@
+# The agent must NEVER read raw or private client material.
+demo/red_raw_local_only/
+raw/
+originals/
+private/
+.env*
+*.key

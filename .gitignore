@@ -1,0 +1,19 @@
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.env*
+
+# tool artifacts
+.enzyme/
+.enzyme-embeddings/
+.DS_Store
+
+# briefing: publish only corrections + evidence (exclude making-of)
+briefing/01-project-and-approach.md
+briefing/03-build-plan-and-questions.md
+briefing/04-current-deck-full.md
+briefing/06-deck-revisions.md
+briefing/GPT-PRO-PACKAGE.md
+briefing/gpt-pro-review.md

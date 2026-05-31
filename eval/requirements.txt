@@ -1,0 +1,6 @@
+# Minimal deps for the OpenAI Privacy Filter English PII eval.
+# Route B: run the model directly via the transformers pipeline (no repo install).
+transformers>=4.40
+torch>=2.2
+# Optional: only needed to rebuild the real ai4privacy slice (build_dataset.py).
+datasets>=2.18
