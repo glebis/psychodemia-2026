@@ -174,24 +174,34 @@ def run_ollama(text: str, model: str = "qwen2.5:3b") -> list[Span]:
                   '[{\"text\":\"...\",\"type\":\"PERSON|LOCATION|ORG|PHONE|DATE|ADDRESS|MEDICATION|ID|AGE|PROFESSION\"}]. '
                   'No explanations.\n\nText: ' + text)
 
-        payload = json.dumps({
-            "model": model,
-            "messages": [
-                {"role": "user", "content": prompt}
-            ],
-            "stream": False,
-            "options": {"temperature": 0, "num_predict": 2048}
-        }).encode()
+        # Engine-agnostic local-LLM transport. LLM_API=openai targets the
+        # OpenAI-compatible /v1/chat/completions endpoint that llama.cpp's
+        # `llama-server` (primary, memory-efficient — pin the .gguf + quant),
+        # vLLM, and Ollama all expose. Default "ollama" keeps /api/chat for an
+        # existing local Ollama. Base URL: LLM_BASE_URL or OLLAMA_HOST.
+        api = os.environ.get("LLM_API", "ollama").lower()
+        base = os.environ.get("LLM_BASE_URL",
+                              os.environ.get("OLLAMA_HOST", "http://localhost:11434")).rstrip("/")
+        messages = [{"role": "user", "content": prompt}]
+        if api == "openai":
+            url = base + "/v1/chat/completions"
+            payload = json.dumps({"model": model, "messages": messages,
+                                  "temperature": 0, "max_tokens": 2048,
+                                  "stream": False}).encode()
+        else:
+            url = base + "/api/chat"
+            payload = json.dumps({"model": model, "messages": messages, "stream": False,
+                                  "options": {"temperature": 0, "num_predict": 2048}}).encode()
 
-        req = urllib.request.Request(
-            "http://localhost:11434/api/chat",
-            data=payload,
-            headers={"Content-Type": "application/json"}
-        )
+        req = urllib.request.Request(url, data=payload,
+                                     headers={"Content-Type": "application/json"})
         with urllib.request.urlopen(req, timeout=180) as resp:
             data = json.loads(resp.read())
 
-        output = data.get("message", {}).get("content", "")
+        if api == "openai":
+            output = (data.get("choices") or [{}])[0].get("message", {}).get("content", "")
+        else:
+            output = data.get("message", {}).get("content", "")
         output = re.sub(r'<think>.*?</think>', '', output, flags=re.DOTALL)
 
         match = re.search(r'\[.*\]', output, re.DOTALL)

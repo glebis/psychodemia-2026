@@ -81,8 +81,16 @@ def log_run(kind, dataset, metrics, *, model=None, privacy="synthetic", extra=No
     }
     if extra:
         rec["extra"] = extra
+    # 1) append-only index (one line per run) — quick history/leaderboard
     with open(RUNS_JSONL, "a", encoding="utf-8") as f:
         f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    # 2) per-run JSON file (lm-evaluation-harness / HELM convention) — committed,
+    #    self-contained provenance + results for that exact run.
+    safe_ts = rec["ts"].replace(":", "").replace("-", "").replace("+0000", "Z")
+    fname = f"{safe_ts}-{kind}-{str(dataset).replace('/', '_')}.json"
+    with open(os.path.join(RUNS_DIR, fname), "w", encoding="utf-8") as f:
+        json.dump(rec, f, ensure_ascii=False, indent=2)
+    rec["_file"] = fname
     return rec
 
 

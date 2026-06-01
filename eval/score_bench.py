@@ -352,6 +352,23 @@ def main():
     out_json = os.path.join(HERE, f"{args.out_prefix}bench-results.json")
     with open(out_json, "w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
+    # provenance log: one committed run record (lm-eval-harness style) per scoring
+    try:
+        import run_registry
+        star = next((e for n, e in results["combos"].items()
+                     if "★" in n and isinstance(e, dict) and "coverage_relaxed" in e), None)
+        headline = {"n_docs": results["n_docs"], "n_gold": results["n_gold_mentions"]}
+        if star:
+            headline["default_coverage_recall"] = star["coverage_relaxed"]["r"]
+            headline["default_coverage_f2"] = star["coverage_relaxed"]["f2"]
+            if "entity_level" in star:
+                headline["default_entity_recall"] = star["entity_level"]["entity_recall"]
+        run_registry.log_run("score_bench", args.dataset, headline,
+                             extra={"combos": {n: e.get("coverage_relaxed")
+                                               for n, e in results["combos"].items()
+                                               if isinstance(e, dict) and "coverage_relaxed" in e}})
+    except Exception:
+        pass
     # console summary
     print(f"\n=== {args.dataset}: {results['n_docs']} docs, {results['n_gold_mentions']} gold mentions ===")
     hdr = f"{'combo':28} {'covF2(rel)':>10} {'covR':>6} {'typeF2':>7} {'macroF1':>8}"
