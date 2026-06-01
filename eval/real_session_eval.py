@@ -111,6 +111,10 @@ def main():
         agg["n_files"] += 1
         agg["total_chars"] += n
         agg["masked_chars"] += masked
+        # flushed progress (counts only, no PII) so the run is observable
+        print(f"[real-eval] {idx + 1}/{len(paths)} chars={n} "
+              f"spans={len(layers['natasha'])+len(layers['regex'])+len(layers['ollama'])} "
+              f"red={per_file[-1]['redaction_rate']:.1%}", flush=True)
 
     agg["overall_redaction_rate"] = round(agg["masked_chars"] / agg["total_chars"], 4) if agg["total_chars"] else 0.0
     result = {"privacy": "stats-only; no transcript text or PII values emitted",
