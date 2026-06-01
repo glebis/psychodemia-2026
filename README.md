@@ -1,60 +1,85 @@
-```
-  ____ ___  _   _ _____ ___ ____  _____
- / ___/ _ \| \ | |  ___|_ _|  _ \| ____|
-| |  | | | |  \| | |_   | || | | |  _|
-| |__| |_| | |\  |  _|  | || |_| | |___
- \____\___/|_| \_|_|   |___|____/|_____|
-```
+# Паттерны в массиве сессий
 
-# CONFIDE
+**Анонимизация, агентные системы и AI-анализ для психологов.**
+Материалы мастер-класса — Psychodemia · AI & Mental Health · 31 мая 2026.
 
-**Conf**idential **F**iltering of **I**dentifying **De**tails (Locked) — the CON·F·I·DE spelling.
+Полный пайплайн на приватных данных:
+**Запись → Транскрипт → Анонимизация → AI-агент → Отчёт** — без отправки сырых данных
+клиента в облако. Терминальное демо на Claude Code + воспроизводимые промпты и эталоны.
 
-> *"Confide in me."* — Kylie Minogue, *Confide in Me* (1994)
-
-> "in the name of understanding a problem should be shared"
+> ⚠️ Все транскрипты в репозитории — **синтетические** (вымышленные клиенты). Реальные
+> данные клиентов сюда не попадают и не должны. Это и есть главный тезис мастер-класса.
 
 ---
 
-CONFIDE is a **local-first, privacy-first** toolkit and benchmark for de-identifying
-**psychotherapy and coaching session transcripts** — and for measuring how well that
-de-identification actually holds up against re-identification. Everything runs on your
-own machine; raw client data never leaves it.
+## Что внутри
 
-The premise: to *understand* a problem with AI, the transcript has to be shared with a
-model — so first it must be made safe to share. CONFIDE both does that (the anonymizer)
-and tells you, honestly, when it isn't enough (the benchmark + the attacks).
+```
+sessions-ru/         # синтетические RU-сессии: 2 клиента × 5 сессий + ANSWER-KEY (эталон)
+  client-a/          #   Марина — тревога/перфекционизм (катастрофизация ↓, чтение мыслей ↑)
+  client-b/          #   Игорь  — прокрастинация/самооценка (долженствование, ярлыки)
+sessions-en/         # размеченный EN-набор PII для оценки модели анонимизации
+prompts/PROMPTS.md   # 8 клинических промптов + линзы ACT/психодинамика + шаг безопасности
+reference-outputs/   # заранее посчитанные результаты — страховка на случай сбоя в демо
+eval/                # PsychoPII — двуязычный (RU/EN) бенчмарк де-ид: gold, IAA, ablation слоёв (regex/Natasha/opf/LLM)
+skills/              # 10 навыков (Claude Code + Codex): анонимизация, разбор, линзы — см. INDEX.md
+briefing/            # пакет для внешнего ревью (GPT Pro): подход, фактчек, план, источники
+```
 
-## The three parts
+## Быстрый старт
 
-| Part | What it is | Where |
-|---|---|---|
-| **CONFIDE** | The layered, local de-identification stack: deterministic regex (emails/phones/IDs/dates) → Russian NER (Natasha) → optional OpenAI Privacy Filter → local LLM (Qwen via Ollama/llama.cpp) for medications, ages, professions, contextual IDs. | `skills/session-anonymizer/` |
-| **CONFIDE-Bench** | A bilingual **RU + EN** psychotherapy-transcript de-identification **benchmark** — a layered-detector ablation scored the way the field does (recall-first / entity-level / direct vs quasi-identifier), plus a privacy–utility axis. To our knowledge the first therapy-*dialogue* de-id benchmark. | `eval/BENCHMARK.md` |
-| **CONFIDE-Red** | The **red team**: LLM-based **re-identification / de-anonymization** attacks on the redacted output — single-session inference, longitudinal cross-session linkage, quasi-identifier singling-out — aligned with the GDPR Art-29 attack taxonomy (singling-out / linkability / inference) and the Staab et al. / RAT-Bench inference-attack literature. | `eval/*_attack.py`, `eval/privacy_utility_eval.py` |
+**1. Claude Code** (анализ сессий):
+```bash
+npm install -g @anthropic-ai/claude-code   # или: brew install claude-code
+cd psychodemia-2026 && claude
+# вставьте любой промпт из prompts/PROMPTS.md
+```
 
-CONFIDE *protects*; CONFIDE-Red *attacks* — measuring what survives so "we removed the
-names" is never mistaken for "this is safe to send to the cloud."
+**2. Анонимизация русских транскриптов — навык `session-anonymizer`** (локально, без облака):
+```bash
+cd skills/session-anonymizer && ./setup.sh   # Natasha (RU NER) + regex (scrubadub+phones) + Ollama
+python3 scripts/anonymize.py session.txt
+```
 
-## Headline findings
+**3. Что я пробовал для слоя 2 — OpenAI Privacy Filter** (англоязычный замер, в итоге заменён):
+```bash
+pip install -r eval/requirements.txt
+python eval/run_opf.py && python eval/score.py   # см. eval/README.md
+```
+> opf (HF `openai/privacy-filter`, Apache-2.0, ~1.5B, **апрель 2026**) — **English-first**. Брал её
+> как слой 2, но на CPU ~2с/строку (не дочитала 10 КБ) и ломала JSON → **заменил детерминированным
+> regex** (scrubadub + libphonenumber) в `session-anonymizer`. Замер оставлен как урок про recall.
+> Пакета `opf` на PyPI нет — `git clone … && pip install -e .`.
 
-- **Some PII only an LLM catches** — medications, ages, professions, contextual dates are
-  ~0% for regex + NER; only the local LLM layer recovers them.
-- **Removing direct identifiers is necessary but not sufficient** — quasi-identifiers
-  survive and an LLM attacker can still infer attributes, especially across multiple
-  sessions of the same person.
-- **Bigger isn't automatically better** — a one-line date regex recovered a heavy
-  transformer's entire Russian advantage at ~500× the speed.
+## Как идёт демо
 
-## Reproducibility & ethics
+1. Анонимизация одной сессии + ручная проверка квази-идентификаторов.
+2. DoT-разбор одной сессии + аудит вывода.
+3. **Массив сессий:** тренд искажений, эволюция тем, избегание, ДЗ — главная ценность.
+4. Линзы ACT и психодинамики на том же корпусе + самосупервизия. Этическая граница.
 
-Pinned environment + Docker (`eval/Dockerfile`, `eval/requirements.lock`), an append-only
-run registry (`eval/runs/`), and full docs: `eval/REPRODUCIBILITY.md`, `eval/ETHICS.md`,
-`eval/DATASHEET.md`, `eval/EXPLAINER.md`.
+Каждый результат сверяется с `ANSWER-KEY.md` («что заложено vs. что нашёл AI»).
+Если живой запуск тормозит — открываем соответствующий файл из `reference-outputs/`.
 
-> ⚠️ All transcripts in this repository are **synthetic** (fictional clients). Real client
-> data never enters it and must not. CONFIDE-Red attacks run only against fabricated
-> personas. Benchmark performance is **not** HIPAA or GDPR anonymisation certification.
+## Научная корректность
 
-CONFIDE grew out of the *Psychodemia · AI & Mental Health* masterclass (31 May 2026); the
-original masterclass materials are in `README-masterclass.md`.
+Правки и источники для слайдов — в `briefing/02-corrections-factcheck.md` и
+`briefing/05-evidence-and-benchmarks.md`. Ключевое:
+- **DoT** — Chen, Lu & Wang, EMNLP-Findings 2023 (шаг 3 = «анализ схемы», не «классификация»).
+- Искажения — **Бек 1976 и Бёрнс 1980** (не только Бек).
+- Альянс — **Working Alliance Inventory / Bordin** (COMPASS — это NLP-метод 2024, не клиническая рамка; и он не валидирован против WAI).
+- Change/sustain talk — **Miller & Rollnick**.
+- Приверженность — **Hogue et al. 2015** (терапевты завышают самооценку приверженности; цифры «78/42» из старого черновика — ошибочны, удалены).
+- PII-оценка — **recall = метрика безопасности** (пропуск = утечка), Presidio (F2) / i2b2-n2c2.
+- 152-ФЗ (ред. 2025): без согласия до 700k ₽; утечка спецкатегорий 10–15 млн ₽; локализация 1–6 / 6–18 млн ₽.
+
+## Этическая граница
+
+AI здесь — **микроскоп, не хирург**. НЕ для оценки суицидального риска, кризисных
+интервенций, диагностики без верификации и автоматических решений о лечении. Оценка
+риска — только человек, всегда.
+
+## Лицензия
+
+Код и промпты — MIT. Синтетические данные — CC0. Используйте, форкайте, улучшайте.
+Глеб Калинин · t.me/glebkalinin · the-agency.community

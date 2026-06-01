@@ -2,7 +2,7 @@
 
 > Paste the block below into a deep-research agent (Claude/ChatGPT/Gemini deep research,
 > or the local `deep-research` skill). It is written to position and strengthen
-> **CONFIDE-Bench** — a bilingual (Russian + English) synthetic **psychotherapy-transcript**
+> **PsychoPII** — a bilingual (Russian + English) synthetic **psychotherapy-transcript**
 > de-identification benchmark that scores a *layered detector ablation* (regex +
 > NER + OpenAI Privacy Filter + local LLM) with recall-first, entity-level (TAB),
 > direct/quasi-identifier, and re-identification-risk metrics.
@@ -16,7 +16,7 @@ text anonymization. Produce a rigorous, citation-backed survey that I can use to
 methodology, and (c) decide what to add next.
 
 ## CONTEXT (the benchmark this research serves)
-CONFIDE-Bench evaluates how well a *local, privacy-first* anonymization stack redacts
+PsychoPII evaluates how well a *local, privacy-first* anonymization stack redacts
 PII from therapy session transcripts. Detector layers: deterministic regex
 (emails/URLs/phones/IDs/dates via scrubadub + libphonenumber), Russian NER
 (Natasha), the OpenAI Privacy Filter (transformers NER), and a local LLM (qwen via
@@ -47,7 +47,7 @@ LLM inference attack on redacted text, over-redaction/utility cost).
 4. Survey de-identification **method families**: rule/regex, CRF/feature-based,
    neural NER (BiLSTM-CRF, BERT/transformer token classification), and **LLM-based**
    anonymizers (prompted, fine-tuned, agentic). What does the evidence say about
-   **hybrid / layered / ensemble** systems (the CONFIDE-Bench premise)? Quantify where
+   **hybrid / layered / ensemble** systems (the PsychoPII premise)? Quantify where
    each family wins/loses by PII type.
 5. How do leading tools compare — **Microsoft Presidio**, OpenAI Privacy Filter,
    Philter, spaCy/Stanza pipelines, commercial (AWS Comprehend Medical, Azure,
@@ -75,7 +75,7 @@ LLM inference attack on redacted text, over-redaction/utility cost).
     novelty of: (i) therapy-*dialogue* domain, (ii) Russian therapy de-id, (iii) a
     *layered-detector ablation* framing, (iv) integrating reconstruction/re-id risk +
     utility into one harness. What would a reviewer say is missing or already done?
-11. Recommend a **prioritized list of concrete additions** to CONFIDE-Bench drawn from
+11. Recommend a **prioritized list of concrete additions** to PsychoPII drawn from
     the strongest prior art (metrics, attacker protocols, taxonomy, splits, IAA,
     multilingual extension via ai4privacy real slices for DE/FR/ES/IT/NL).
 
@@ -88,13 +88,13 @@ LLM inference attack on redacted text, over-redaction/utility cost).
 - Note licenses and any PHI/consent constraints for each dataset.
 
 ## OUTPUT FORMAT
-1. **Executive summary** (≤250 words): the landscape and where CONFIDE-Bench fits.
+1. **Executive summary** (≤250 words): the landscape and where PsychoPII fits.
 2. **Comparison table** of benchmarks: name | domain | language(s) | size | taxonomy |
    real/synthetic | metric | license | link.
 3. **Methods synthesis** with a per-PII-type "which family wins" table.
 4. **Methodology cheat-sheet**: the recommended scoring + re-identification + utility
    protocol, with citations.
-5. **Gap analysis & novelty verdict** for CONFIDE-Bench (honest, reviewer's-eye).
+5. **Gap analysis & novelty verdict** for PsychoPII (honest, reviewer's-eye).
 6. **Prioritized adoption roadmap** (P0/P1/P2) of additions, each tagged with its
    source benchmark.
 7. **Annotated bibliography** (grouped: benchmarks, methods, re-identification,

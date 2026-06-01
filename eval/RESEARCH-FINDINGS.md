@@ -8,7 +8,7 @@
 
 ## 1. Executive summary
 
-CONFIDE-Bench has a strong positioning claim only if it refuses to be "yet another PII
+PsychoPII has a strong positioning claim only if it refuses to be "yet another PII
 NER benchmark." The defensible novelty is: RU+EN psychotherapy-style dialogue,
 layered detector ablation, direct/quasi taxonomy, all-mention masking, and
 re-identification plus utility scoring in one benchmark. Existing anchors cover
@@ -65,7 +65,7 @@ psychotherapy dialogue with direct/quasi + all-mention + ablation + re-id.
 - **CRF/feature** dominated early clinical de-id; **neural NER** improved robustness
   (N-GRID LSTM > CRF); **LLMs** win **quasi-identifiers / inference-prone facts**
   (occupation, family structure, rare events, combinations).
-- **Hybrid/layered is the historical winning pattern** — CONFIDE-Bench's stack is well
+- **Hybrid/layered is the historical winning pattern** — PsychoPII's stack is well
   aligned; must score over-redaction + utility, not just recall.
 - Per-type: structured→regex; names/patronymics→NER+LLM review; addresses→gazetteer+
   NER+LLM; dates/ages→regex+contextual; employer/school/clinic→NER+LLM quasi;
@@ -92,7 +92,7 @@ psychotherapy dialogue with direct/quasi + all-mention + ablation + re-id.
   data.
 
 ## 7. Novelty verdict
-Real white space. **Safe wording:** "To our knowledge, CONFIDE-Bench is the first public
+Real white space. **Safe wording:** "To our knowledge, PsychoPII is the first public
 RU+EN synthetic psychotherapy-transcript de-identification benchmark combining
 layered detector ablation, direct/quasi identifier scoring, all-mention recall, and
 re-identification/utility evaluation." Do **not** claim "first therapy PII dataset
@@ -114,7 +114,7 @@ therapist utility study; population-uniqueness risk modeling; multilingual exten
 (UK/DE/ES); TAB/Tau-compatible harness; external red-team.
 
 ## 9. Recommended benchmark definition
-"CONFIDE-Bench is a bilingual Russian-English synthetic psychotherapy-transcript
+"PsychoPII is a bilingual Russian-English synthetic psychotherapy-transcript
 benchmark for text de-identification and residual re-identification risk. It contains
 span-level direct and quasi-identifier annotations, entity-level coreference,
 speaker-turn metadata, and masking decisions. We evaluate layered systems (regex,

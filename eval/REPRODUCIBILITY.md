@@ -1,4 +1,4 @@
-# Reproducibility, Re-run Policy & Cost — CONFIDE-Bench
+# Reproducibility, Re-run Policy & Cost — PsychoPII
 
 How to keep the benchmark **comparable over time** as tools, models, and data change.
 Follows the living-benchmark norms of HELM and EleutherAI lm-evaluation-harness, and

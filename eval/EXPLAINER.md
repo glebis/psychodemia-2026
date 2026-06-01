@@ -1,4 +1,4 @@
-# What CONFIDE-Bench Measures — in Plain Language
+# What PsychoPII Measures — in Plain Language
 
 A graded explainer (ELI5 → ELI14) plus ready-to-paste blurbs for science blogs,
 magazines, and psychology outlets. Everything below describes a benchmark built on
@@ -26,7 +26,7 @@ hiding is tricky:
 - Hard stuff: "I'm the only puppet-maker in my small town" has **no** name in it — but
   it could still tell people exactly who you are.
 
-CONFIDE-Bench is a **scorecard** that checks how many private bits a computer catches, how
+PsychoPII is a **scorecard** that checks how many private bits a computer catches, how
 many it misses, and whether it accidentally erases the parts a therapist still needs.
 
 ## ELI11 (≈age 11)
@@ -40,7 +40,7 @@ kinds of clues:
    shared by lots of people, but **stack three or four together** and only one person
    matches.
 
-CONFIDE-Bench tests a "team" of computer tools working together: a rule-checker for
+PsychoPII tests a "team" of computer tools working together: a rule-checker for
 patterns (phones, emails), a name-finder for Russian, an AI model, and a small local
 language model (an LLM) for the trickier clues. The scorecard answers three questions:
 
@@ -53,7 +53,7 @@ exist only for English, and mostly for hospital notes, not therapy conversations
 
 ## ELI14 (≈age 14)
 
-CONFIDE-Bench is a **benchmark** — a standardized test — for *de-identifying psychotherapy
+PsychoPII is a **benchmark** — a standardized test — for *de-identifying psychotherapy
 transcripts* in Russian and English. It measures a layered system where each "layer"
 catches different things, and it scores them the way privacy researchers do:
 
@@ -94,7 +94,7 @@ and passing this test is **not** legal anonymization under HIPAA or GDPR.
 ## Ready-to-paste blurbs
 
 **One-liner (tweet/abstract):**
-> CONFIDE-Bench is the first public Russian+English benchmark for scrubbing private details
+> PsychoPII is the first public Russian+English benchmark for scrubbing private details
 > from *therapy* conversations — measuring not just whether names get removed, but
 > whether someone could still be re-identified, and whether the therapeutic meaning
 > survives. Synthetic data; recall-first; the quasi-identifiers are where it gets hard.
@@ -103,7 +103,7 @@ and passing this test is **not** legal anonymization under HIPAA or GDPR.
 > Before an AI can help summarize a therapy session, the private details have to be
 > stripped out. That sounds simple — delete the names and phone numbers — but the real
 > danger hides in combinations: your age, job, city and employer can single you out even
-> with every name gone. CONFIDE-Bench is a new open benchmark that tests how well a stack of
+> with every name gone. PsychoPII is a new open benchmark that tests how well a stack of
 > tools (pattern rules, a name-finder, and a local AI model) does exactly this on
 > *fictional* therapy transcripts in Russian and English. Its sharpest lesson: removing
 > the obvious identifiers is the easy 80%; the leftover "quasi-identifiers" are what let
@@ -111,7 +111,7 @@ and passing this test is **not** legal anonymization under HIPAA or GDPR.
 
 **Psychology-outlet framing:**
 > Therapists increasingly want to use AI to review sessions, supervise, or spot patterns
-> — but session transcripts are among the most sensitive text that exists. CONFIDE-Bench
+> — but session transcripts are among the most sensitive text that exists. PsychoPII
 > asks a practical question: can you de-identify a therapy transcript *and still keep
 > what matters clinically*? On synthetic sessions it finds that good anonymization
 > preserves ~90% of the cognitive-distortion signal a clinician would analyze, while
@@ -121,7 +121,7 @@ and passing this test is **not** legal anonymization under HIPAA or GDPR.
 > should be checked.
 
 **Methods-blog one-paragraph:**
-> CONFIDE-Bench evaluates a layered, *local-first* de-identification stack (regex +
+> PsychoPII evaluates a layered, *local-first* de-identification stack (regex +
 > Russian NER + the OpenAI Privacy Filter + a local qwen LLM, composed by span-union)
 > with the metrics de-id research expects: recall-weighted F2, entity-level all-mention
 > recall (TAB), direct/quasi split, a top-k re-identification attack, k-anonymity-style

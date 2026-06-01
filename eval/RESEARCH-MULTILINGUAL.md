@@ -8,12 +8,12 @@
 There is **no public therapy/counseling-dialogue de-identification corpus with PII spans
 in English, German, French, or Spanish.** Each language has clinical-note de-id corpora,
 generic NER, and synthetic multilingual PII sets — but the therapy-*dialogue* + PII-span
-combination is an open gap everywhere. This confirms and extends CONFIDE-Bench's novelty and
+combination is an open gap everywhere. This confirms and extends PsychoPII's novelty and
 makes a multilingual extension a clear contribution.
 
 ## English — additional (beyond TAB/i2b2/ai4privacy/MathEd/etc.)
 - **SPY** (NAACL-SRW 2025) — medical-dialogue, fine-grained-PII-vs-NER, placeholder+Faker
-  generation. *Best methodological precedent for CONFIDE-Bench.* HF `mks-logic/SPY`.
+  generation. *Best methodological precedent for PsychoPII.* HF `mks-logic/SPY`.
 - **ASQ-PHI** (Data in Brief 2026) — 1,051 synthetic clinical LLM queries, 13 HIPAA
   Safe-Harbor types; "safe handoff before leaving the boundary" framing.
 - **CRAPII / PIILO** (Learning Agency Lab 2024) — real, human-annotated student essays
@@ -51,7 +51,7 @@ makes a multilingual extension a clear contribution.
 
 ## Spanish
 - **CARMEN-I** (PhysioNet, Nature Sci Data 2024/25) — real bilingual **ES+CA** EHR de-id, 28 PHI
-  types, dual mask/replace (= CONFIDE-Bench pattern). *Strongest real Spanish resource* (DUA-gated).
+  types, dual mask/replace (= PsychoPII pattern). *Strongest real Spanish resource* (DUA-gated).
 - **MEDDOCAN** (IberLEF 2019, CC-BY-4.0) — canonical Spanish clinical de-id, 22 categories.
 - **MIDAS** (NAACL 2025) — real Spanish **motivational-interviewing counseling** dialogue (ES+LatAm),
   74 sessions — **no PII labels** but the closest genre; best seed for a Spanish therapy-PII pilot.
@@ -59,7 +59,7 @@ makes a multilingual extension a clear contribution.
 - Gaps: **DNI/NIE/NSS (ES), CURP/RFC (MX)** unvalidated; clinical corpora are all European Spanish.
 - Note: **MultiGraSCCo excludes Spanish**.
 
-## Implications for CONFIDE-Bench
+## Implications for PsychoPII
 - **Taxonomy alignment:** map our canonical types to MEDDOCAN(22)/AP-HP(12)/GraSCCoPHI/HIPAA-18
   for cross-corpus comparability; adopt MultiGraSCCo's **indirect-identifier** schema for quasi-IDs.
 - **Extension recipe per language:** reuse a shareable synthetic clinical base (PARHAF/GraSCCo) or
@@ -102,4 +102,4 @@ anonymisation NERC). Confirms CARMEN-I as the strongest real post-MEDDOCAN resou
 lang); the universal gap is **locale structured-ID regex** — DE: Steuer-IdNr/SV-Nr/KV-Nr/DE-IBAN;
 FR: NIR/SIREN-SIRET/INSEE; ES: DNI/NIE/NSS/CIF **+ LatAm** RUT/CURP/RFC/CUIL — none built into
 default Presidio. And **no language has usable real therapy de-id data** → synthetic generation
-(the CONFIDE-Bench approach) is the only path in every language.
+(the PsychoPII approach) is the only path in every language.

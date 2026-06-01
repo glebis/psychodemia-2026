@@ -73,7 +73,7 @@ def per_category(res):
 def main():
     out = []
     A = out.append
-    A("# CONFIDE-Bench — A Bilingual Synthetic De-identification Benchmark for Therapy Transcripts")
+    A("# PsychoPII — A Bilingual Synthetic De-identification Benchmark for Therapy Transcripts")
     A("")
     A("> A reproducible, layered-detector ablation measuring how well a local, "
       "privacy-first anonymization stack redacts PII from psychotherapy session "
