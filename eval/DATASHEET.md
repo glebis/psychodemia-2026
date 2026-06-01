@@ -1,6 +1,6 @@
-# Datasheet & Data Statement — PsychoPII
+# Datasheet & Data Statement — CONFIDE-Bench
 
-Documentation for the **PsychoPII** bilingual (RU/EN) synthetic psychotherapy-transcript
+Documentation for the **CONFIDE-Bench** bilingual (RU/EN) synthetic psychotherapy-transcript
 de-identification benchmark, following *Datasheets for Datasets* (Gebru et al., 2021)
 and *Data Statements for NLP* (Bender & Friedman, 2018). See `BENCHMARK.md` for results
 and `RESEARCH-FINDINGS.md` for positioning.

@@ -1,4 +1,4 @@
-# PsychoPII — A Bilingual Synthetic De-identification Benchmark for Therapy Transcripts
+# CONFIDE-Bench — A Bilingual Synthetic De-identification Benchmark for Therapy Transcripts
 
 > A reproducible, layered-detector ablation measuring how well a local, privacy-first anonymization stack redacts PII from psychotherapy session transcripts in **Russian and English**. Built for the Psychodemia 2026 masterclass.
 
@@ -28,33 +28,33 @@ _Citations: Pilán et al., *The Text Anonymization Benchmark*, Computational Lin
 
 ## RU-synth — Russian synthetic therapy series (client-a + client-b, 10 sessions)
 
-**10 documents, 189 gold PII mentions.** ★ marks the proposed default stack for this language.
+**30 documents, 713 gold PII mentions.** ★ marks the proposed default stack for this language.
 
 ### Ablation leaderboard
 
 | Combo | Cov F2 (rel) | Cov R | Type F2 | Macro-F1 | Ent-R (TAB) | Direct-R | Quasi-R | Preds |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|
-| regex | **0.091** | 0.074 | 0.091 | 0.329 | 0.326 | 0.235 | 0.385 | 14 |
-| natasha | **0.759** | 0.746 | 0.748 | 0.209 | 0.349 | 0.529 | 0.231 | 163 |
-| ollama | **0.457** | 0.407 | 0.415 | 0.356 | 0.140 | 0.176 | 0.115 | 85 |
-| natasha+regex | **0.822** | 0.820 | 0.811 | 0.537 | 0.674 | 0.765 | 0.615 | 177 |
-| natasha+ollama | **0.796** | 0.799 | 0.770 | 0.436 | 0.465 | 0.706 | 0.308 | 182 |
-| regex+ollama | **0.515** | 0.466 | 0.480 | 0.567 | 0.395 | 0.235 | 0.500 | 96 |
-| natasha+regex+ollama ★ | **0.845** | 0.857 | 0.824 | 0.648 | 0.721 | 0.765 | 0.692 | 193 |
-| opf+natasha+regex+ollama | **0.882** | 0.926 | 0.832 | 0.535 | 0.791 | 0.941 | 0.692 | 224 |
+| regex | **0.047** | 0.038 | 0.047 | 0.171 | 0.252 | 0.102 | 0.379 | 37 |
+| natasha | **0.737** | 0.750 | 0.731 | 0.203 | 0.308 | 0.408 | 0.224 | 705 |
+| ollama | **0.456** | 0.418 | 0.419 | 0.440 | 0.243 | 0.306 | 0.190 | 360 |
+| natasha+regex | **0.766** | 0.788 | 0.761 | 0.374 | 0.561 | 0.510 | 0.603 | 742 |
+| natasha+ollama | **0.773** | 0.815 | 0.757 | 0.494 | 0.495 | 0.714 | 0.310 | 825 |
+| regex+ollama | **0.486** | 0.449 | 0.450 | 0.528 | 0.449 | 0.327 | 0.552 | 390 |
+| natasha+regex+ollama ★ | **0.796** | 0.846 | 0.782 | 0.583 | 0.701 | 0.735 | 0.672 | 855 |
+| opf+natasha+regex+ollama | **0.806** | 0.864 | 0.784 | 0.549 | 0.729 | 0.796 | 0.672 | 886 |
 
 ### Per-category recall (relaxed, type-agnostic) — *which layer catches what*
 
-| Combo | AGE | DATE | EMAIL | ID | LOCATION | MEDICATION | MODALITY | ORG | PERSON | PHONE | PROFESSION |
-|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
-| regex | 0.00 | 0.91 | 1.00 | 0.50 | 0.00 | 0.00 | — | 0.00 | 0.00 | 0.50 | 0.00 |
-| natasha | 0.00 | 0.00 | 0.00 | 0.00 | 0.89 | 0.00 | — | 1.00 | 0.93 | 0.00 | 0.00 |
-| ollama | 0.50 | 0.00 | 1.00 | 0.00 | 0.33 | 0.25 | — | 0.17 | 0.46 | 0.50 | 0.33 |
-| natasha+regex | 0.00 | 0.91 | 1.00 | 0.50 | 0.89 | 0.00 | — | 1.00 | 0.93 | 0.50 | 0.00 |
-| natasha+ollama | 0.50 | 0.00 | 1.00 | 0.00 | 0.89 | 0.25 | — | 1.00 | 0.93 | 0.50 | 0.33 |
-| regex+ollama | 0.50 | 0.91 | 1.00 | 0.50 | 0.33 | 0.25 | — | 0.17 | 0.46 | 0.50 | 0.33 |
-| natasha+regex+ollama ★ | 0.50 | 0.91 | 1.00 | 0.50 | 0.89 | 0.25 | — | 1.00 | 0.93 | 0.50 | 0.33 |
-| opf+natasha+regex+ollama | 0.50 | 0.91 | 1.00 | 1.00 | 0.89 | 0.25 | — | 1.00 | 1.00 | 0.50 | 0.50 |
+| Combo | AGE | DATE | EMAIL | EVENT | ID | LOCATION | MEDICATION | MODALITY | ORG | PERSON | PHONE | PROFESSION |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| regex | 0.00 | 0.96 | 0.00 | — | 0.83 | 0.00 | 0.00 | — | 0.00 | 0.00 | 0.00 | 0.00 |
+| natasha | 0.00 | 0.00 | 0.00 | — | 0.00 | 0.94 | 0.03 | — | 0.85 | 0.91 | 0.00 | 0.03 |
+| ollama | 0.35 | 0.04 | 1.00 | — | 0.67 | 0.67 | 0.16 | — | 0.20 | 0.45 | 0.83 | 0.22 |
+| natasha+regex | 0.00 | 0.96 | 0.00 | — | 0.83 | 0.94 | 0.03 | — | 0.85 | 0.91 | 0.00 | 0.03 |
+| natasha+ollama | 0.35 | 0.04 | 1.00 | — | 0.67 | 0.94 | 0.16 | — | 0.90 | 0.93 | 0.83 | 0.25 |
+| regex+ollama | 0.35 | 0.96 | 1.00 | — | 0.83 | 0.67 | 0.16 | — | 0.20 | 0.45 | 0.83 | 0.22 |
+| natasha+regex+ollama ★ | 0.35 | 0.96 | 1.00 | — | 0.83 | 0.94 | 0.16 | — | 0.90 | 0.93 | 0.83 | 0.25 |
+| opf+natasha+regex+ollama | 0.35 | 0.96 | 1.00 | — | 1.00 | 0.94 | 0.16 | — | 0.90 | 0.94 | 0.83 | 0.31 |
 
 ## EN-synth — English curated therapy-style snippets
 
@@ -64,27 +64,27 @@ _Citations: Pilán et al., *The Text Anonymization Benchmark*, Computational Lin
 
 | Combo | Cov F2 (rel) | Cov R | Type F2 | Micro-F1 | Macro-F1 | Preds |
 |---|--:|--:|--:|--:|--:|--:|
-| regex | **0.255** | 0.217 | 0.255 | 0.345 | 0.382 | 12 |
+| regex | **0.080** | 0.065 | 0.080 | 0.122 | 0.139 | 3 |
 | opf | **0.818** | 0.783 | 0.796 | 0.854 | 0.839 | 38 |
 | ollama | **0.525** | 0.500 | 0.457 | 0.494 | 0.413 | 49 |
-| opf+regex | **0.849** | 0.826 | 0.826 | 0.862 | 0.859 | 42 |
+| opf+regex | **0.818** | 0.783 | 0.796 | 0.854 | 0.839 | 38 |
 | opf+ollama | **0.815** | 0.848 | 0.774 | 0.732 | 0.784 | 58 |
-| regex+ollama | **0.674** | 0.674 | 0.632 | 0.634 | 0.705 | 58 |
-| opf+regex+ollama ★ | **0.843** | 0.891 | 0.803 | 0.743 | 0.805 | 62 |
-| natasha+regex+ollama | **0.690** | 0.696 | 0.648 | 0.643 | 0.712 | 60 |
+| regex+ollama | **0.584** | 0.565 | 0.517 | 0.544 | 0.516 | 52 |
+| opf+regex+ollama ★ | **0.815** | 0.848 | 0.774 | 0.732 | 0.784 | 58 |
+| natasha+regex+ollama | **0.601** | 0.587 | 0.535 | 0.555 | 0.523 | 54 |
 
 ### Per-category recall (relaxed, type-agnostic) — *which layer catches what*
 
 | Combo | DATE | EMAIL | ID | LOCATION | MEDICATION | ORG | PERSON | PHONE | PROFESSION | URL |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
-| regex | 0.12 | 1.00 | 0.14 | 0.00 | — | — | 0.00 | 0.25 | — | 1.00 |
+| regex | 0.12 | 0.00 | 0.14 | 0.00 | — | — | 0.00 | 0.00 | — | 0.33 |
 | opf | 0.50 | 0.75 | 0.71 | 0.80 | — | — | 0.93 | 1.00 | — | 0.67 |
 | ollama | 0.38 | 0.25 | 0.29 | 1.00 | — | — | 0.60 | 0.75 | — | 0.00 |
-| opf+regex | 0.50 | 1.00 | 0.71 | 0.80 | — | — | 0.93 | 1.00 | — | 1.00 |
+| opf+regex | 0.50 | 0.75 | 0.71 | 0.80 | — | — | 0.93 | 1.00 | — | 0.67 |
 | opf+ollama | 0.50 | 0.75 | 0.86 | 1.00 | — | — | 1.00 | 1.00 | — | 0.67 |
-| regex+ollama | 0.50 | 1.00 | 0.43 | 1.00 | — | — | 0.60 | 0.75 | — | 1.00 |
-| opf+regex+ollama ★ | 0.50 | 1.00 | 0.86 | 1.00 | — | — | 1.00 | 1.00 | — | 1.00 |
-| natasha+regex+ollama | 0.50 | 1.00 | 0.43 | 1.00 | — | — | 0.67 | 0.75 | — | 1.00 |
+| regex+ollama | 0.50 | 0.25 | 0.43 | 1.00 | — | — | 0.60 | 0.75 | — | 0.33 |
+| opf+regex+ollama ★ | 0.50 | 0.75 | 0.86 | 1.00 | — | — | 1.00 | 1.00 | — | 0.67 |
+| natasha+regex+ollama | 0.50 | 0.25 | 0.43 | 1.00 | — | — | 0.67 | 0.75 | — | 0.33 |
 
 ## EN-real — Real ai4privacy/pii-masking-300k slice (English validation)
 
@@ -94,27 +94,27 @@ _Citations: Pilán et al., *The Text Anonymization Benchmark*, Computational Lin
 
 | Combo | Cov F2 (rel) | Cov R | Type F2 | Micro-F1 | Macro-F1 | Preds |
 |---|--:|--:|--:|--:|--:|--:|
-| regex | **0.121** | 0.100 | 0.106 | 0.156 | 0.176 | 10 |
+| regex | **0.015** | 0.013 | 0.015 | 0.024 | 0.033 | 3 |
 | opf | **0.603** | 0.562 | 0.603 | 0.676 | 0.732 | 52 |
 | ollama | **0.695** | 0.700 | 0.682 | 0.675 | 0.719 | 80 |
-| opf+regex | **0.646** | 0.613 | 0.633 | 0.689 | 0.745 | 58 |
+| opf+regex | **0.611** | 0.575 | 0.611 | 0.675 | 0.729 | 55 |
 | opf+ollama | **0.851** | 0.900 | 0.851 | 0.787 | 0.847 | 100 |
-| regex+ollama | **0.706** | 0.713 | 0.681 | 0.671 | 0.716 | 81 |
-| opf+regex+ollama ★ | **0.851** | 0.900 | 0.839 | 0.776 | 0.834 | 100 |
-| natasha+regex+ollama | **0.681** | 0.713 | 0.597 | 0.559 | 0.695 | 95 |
+| regex+ollama | **0.695** | 0.700 | 0.682 | 0.675 | 0.719 | 80 |
+| opf+regex+ollama ★ | **0.851** | 0.900 | 0.851 | 0.787 | 0.847 | 100 |
+| natasha+regex+ollama | **0.671** | 0.700 | 0.598 | 0.562 | 0.697 | 94 |
 
 ### Per-category recall (relaxed, type-agnostic) — *which layer catches what*
 
 | Combo | ACTION_TAKEN | DATE | EMAIL | ID | IP | IP_ADDRESS | LOCATION | MEDICATION | ORG | PERSON | PHONE | PROFESSION | TIME | URL |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
-| regex | — | 0.14 | 0.75 | 0.04 | — | — | 0.00 | — | — | 0.00 | 0.00 | — | — | — |
+| regex | — | 0.14 | 0.00 | 0.00 | — | — | 0.00 | — | — | 0.00 | 0.00 | — | — | — |
 | opf | — | 0.57 | 0.75 | 0.35 | — | — | 0.67 | — | — | 0.52 | 1.00 | — | — | — |
 | ollama | — | 0.71 | 0.88 | 0.70 | — | — | 0.44 | — | — | 0.72 | 0.75 | — | — | — |
-| opf+regex | — | 0.71 | 1.00 | 0.39 | — | — | 0.67 | — | — | 0.52 | 1.00 | — | — | — |
+| opf+regex | — | 0.71 | 0.75 | 0.35 | — | — | 0.67 | — | — | 0.52 | 1.00 | — | — | — |
 | opf+ollama | — | 0.86 | 1.00 | 0.83 | — | — | 0.89 | — | — | 0.92 | 1.00 | — | — | — |
-| regex+ollama | — | 0.71 | 1.00 | 0.70 | — | — | 0.44 | — | — | 0.72 | 0.75 | — | — | — |
+| regex+ollama | — | 0.71 | 0.88 | 0.70 | — | — | 0.44 | — | — | 0.72 | 0.75 | — | — | — |
 | opf+regex+ollama ★ | — | 0.86 | 1.00 | 0.83 | — | — | 0.89 | — | — | 0.92 | 1.00 | — | — | — |
-| natasha+regex+ollama | — | 0.71 | 1.00 | 0.70 | — | — | 0.44 | — | — | 0.72 | 0.75 | — | — | — |
+| natasha+regex+ollama | — | 0.71 | 0.88 | 0.70 | — | — | 0.44 | — | — | 0.72 | 0.75 | — | — | — |
 
 ## RU-adversarial — Russian robustness probe (16 snippets: patronymics, transliteration, diminutives, VK/Telegram handles, SNILS/INN/passport, abbreviated addresses, code-switching)
 
@@ -124,21 +124,21 @@ _Citations: Pilán et al., *The Text Anonymization Benchmark*, Computational Lin
 
 | Combo | Cov F2 (rel) | Cov R | Type F2 | Macro-F1 | Ent-R (TAB) | Direct-R | Quasi-R | Preds |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|
-| regex | **0.455** | 0.400 | 0.455 | 0.667 | 0.400 | 0.471 | 0.000 | 8 |
+| regex | **0.349** | 0.300 | 0.349 | 0.333 | 0.300 | 0.353 | 0.000 | 6 |
 | natasha | **0.389** | 0.350 | 0.389 | 0.189 | 0.350 | 0.353 | 0.333 | 10 |
 | ollama | **0.663** | 0.650 | 0.600 | 0.526 | 0.650 | 0.588 | 1.000 | 25 |
-| natasha+regex | **0.765** | 0.750 | 0.765 | 0.856 | 0.750 | 0.824 | 0.333 | 18 |
-| natasha+regex+ollama ★ | **0.887** | 0.950 | 0.887 | 0.888 | 0.950 | 0.941 | 1.000 | 30 |
+| natasha+regex | **0.677** | 0.650 | 0.677 | 0.522 | 0.650 | 0.706 | 0.333 | 16 |
+| natasha+regex+ollama ★ | **0.848** | 0.900 | 0.848 | 0.721 | 0.900 | 0.882 | 1.000 | 29 |
 
 ### Per-category recall (relaxed, type-agnostic) — *which layer catches what*
 
 | Combo | EMAIL | ID | LOCATION | NAME | ORG | PERSON | PHONE | PROFESSION | URL |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|
-| regex | 1.00 | 1.00 | 0.00 | — | — | 0.00 | 1.00 | — | 1.00 |
+| regex | 0.00 | 1.00 | 0.00 | — | — | 0.00 | 0.00 | — | 1.00 |
 | natasha | 0.00 | 0.00 | 0.25 | — | — | 0.75 | 0.00 | — | 0.00 |
 | ollama | 0.00 | 0.67 | 1.00 | — | — | 0.75 | 1.00 | — | 0.00 |
-| natasha+regex | 1.00 | 1.00 | 0.25 | — | — | 0.75 | 1.00 | — | 1.00 |
-| natasha+regex+ollama ★ | 1.00 | 1.00 | 1.00 | — | — | 0.88 | 1.00 | — | 1.00 |
+| natasha+regex | 0.00 | 1.00 | 0.25 | — | — | 0.75 | 0.00 | — | 1.00 |
+| natasha+regex+ollama ★ | 0.00 | 1.00 | 1.00 | — | — | 0.88 | 1.00 | — | 1.00 |
 
 ## Reconstruction & re-identification (what survives)
 
@@ -191,4 +191,6 @@ Beyond relaxed (≥1-char) overlap, a **containment** metric requires ≥80% of 
 - **Synthetic RU data** — fictional; not real patient text.
 - **Spelled-out digits** (e.g. phone read out word-by-word) are out of scope for the regex layer by design and fall to the LLM layer / manual review.
 - One EN-real doc failed Ollama JSON parsing (returned no spans) — a single-doc lower bound on the ollama EN-real numbers.
+- **Non-determinism.** The Ollama (qwen) and GPT-5/Codex (IAA) steps are not fully deterministic; qwen runs at temperature 0 and the IAA seed annotation is committed for reproducibility, but exact spans can vary run-to-run. The bootstrap CIs and the detector manifests bound and date the measurements.
+- Confidence intervals (bootstrap, 95%) are reported per dataset above; with N as small as 10–32 they are wide by design.
 

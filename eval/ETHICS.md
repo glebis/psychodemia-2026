@@ -1,6 +1,6 @@
-# Ethics Statement & Responsible-Use Policy — PsychoPII
+# Ethics Statement & Responsible-Use Policy — CONFIDE-Bench
 
-For inclusion in any publication, repository, or release of the **PsychoPII**
+For inclusion in any publication, repository, or release of the **CONFIDE-Bench**
 de-identification benchmark. Written to the norms of the **ACL Ethics Policy**, the
 **NeurIPS broader-impact / ethics** guidance, the **Menlo Report** (ethical principles
 for security/ICT research), and the **Belmont Report** principles (respect for persons,
@@ -48,7 +48,7 @@ in principle, guide an attacker.
 - **Not intended / prohibited:** clinical decision-making; treating synthetic results as
   guarantees on real data; using the attack components against real people; presenting
   benchmark performance as legal anonymisation.
-- **Explicitly not a compliance instrument.** Passing PsychoPII is **not** HIPAA
+- **Explicitly not a compliance instrument.** Passing CONFIDE-Bench is **not** HIPAA
   Safe-Harbor / Expert-Determination compliance, nor GDPR anonymisation. GDPR
   identifiability is context-dependent and pseudonymised data can remain personal data
   (EDPB). Any production use requires independent legal/clinical assessment.
@@ -57,7 +57,7 @@ in principle, guide an attacker.
 
 - **Intended benefit:** therapists and researchers increasingly want AI assistance with
   session material — the most sensitive text that exists. By quantifying *what survives*
-  anonymization and *whether clinical utility is preserved*, PsychoPII pushes toward
+  anonymization and *whether clinical utility is preserved*, CONFIDE-Bench pushes toward
   handling that protects client privacy **before** any transcript leaves a local machine.
 - **Risk of misuse / over-trust:** a benchmark "score" can create false confidence. We
   counter this by headlining recall (a miss is a leak), reporting residual
@@ -68,7 +68,7 @@ in principle, guide an attacker.
 
 ## 5. Conditions for any future use of real session data
 
-PsychoPII is synthetic by design. If the harness is ever pointed at **real** therapy or
+CONFIDE-Bench is synthetic by design. If the harness is ever pointed at **real** therapy or
 coaching sessions (a stated future direction), the following are **mandatory**, not
 optional:
 
@@ -97,7 +97,7 @@ optional:
 
 *Suggested paper "Ethics Statement" (≤150 words):*
 
-> All transcripts in PsychoPII are fully synthetic and fictional; no real patient data,
+> All transcripts in CONFIDE-Bench are fully synthetic and fictional; no real patient data,
 > personal information, or human subjects are involved, so the work required no IRB
 > review. The benchmark includes re-identification/inference probes, which are run
 > **only** against invented personas and recover only fabricated attributes; we publish

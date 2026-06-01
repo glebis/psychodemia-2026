@@ -166,7 +166,7 @@ def leaderboard_table(res, title):
 HTML = f"""<!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PsychoPII — De-identification Layer Benchmark</title>
+<title>CONFIDE-Bench — De-identification Layer Benchmark</title>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <style>
@@ -210,7 +210,7 @@ footer {{ border-top:1px solid var(--rule); margin-top:3rem; padding-top:1rem; f
 @media(max-width:800px){{ .status-strip{{grid-template-columns:repeat(2,1fr)}} .aside-container{{grid-template-columns:1fr}} }}
 </style></head><body>
 
-<h1>PsychoPII — Which Layer Earns Its Compute?</h1>
+<h1>CONFIDE-Bench — Which Layer Earns Its Compute?</h1>
 <p class="sub">A bilingual de-identification benchmark for psychotherapy transcripts.</p>
 <p class="tags">sources: ru/en/en-real-bench-results.json · reconstruction-results.json &nbsp;|&nbsp; metrics: TAB · i2b2 · Presidio-F2 · datasheets-for-datasets</p>
 
@@ -302,7 +302,7 @@ footer {{ border-top:1px solid var(--rule); margin-top:3rem; padding-top:1rem; f
 <div class="flyout"><div class="t">methodology</div>
 <p>Each detector runs once per dataset; combinations are span-unions of cached spans, interval-merged to the deployed redaction mask before scoring. This report headlines <strong>coverage recall</strong> (relaxed overlap) — the privacy-critical number — and recall-weighted <strong>F2</strong> + precision sit in the leaderboard table. Type-aware micro/macro-F1 (i2b2) and entity-level recall (TAB; all mentions masked) are also reported. Numbers are mention-level unless marked entity-level. Gold for RU is located from the two answer-key PII inventories and hand-verified (a planted-signal recovery eval, not independently annotated gold); English reuses curated + real ai4privacy slices. Synthetic data — no real patients. Small N: treat per-type numbers as directional.</p></div>
 
-<footer>Generated from eval/*-bench-results.json. PsychoPII benchmark, Psychodemia 2026. Metrics: TAB (Pilán 2022), i2b2/n2c2 2014, Presidio-research, Datasheets for Datasets. Synthetic/fictional data.</footer>
+<footer>Generated from eval/*-bench-results.json. CONFIDE-Bench benchmark, Psychodemia 2026. Metrics: TAB (Pilán 2022), i2b2/n2c2 2014, Presidio-research, Datasheets for Datasets. Synthetic/fictional data.</footer>
 
 <script>
 const DATA = {json.dumps(DATA, ensure_ascii=False)};
