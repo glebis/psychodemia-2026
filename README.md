@@ -19,10 +19,10 @@ sessions-ru/         # синтетические RU-сессии: 2 клиен�
   client-a/          #   Марина — тревога/перфекционизм (катастрофизация ↓, чтение мыслей ↑)
   client-b/          #   Игорь  — прокрастинация/самооценка (долженствование, ярлыки)
 sessions-en/         # размеченный EN-набор PII для оценки модели анонимизации
-prompts/PROMPTS.md   # 12 промптов для участников + капстоун (skill)
+prompts/PROMPTS.md   # 8 клинических промптов + линзы ACT/психодинамика + шаг безопасности
 reference-outputs/   # заранее посчитанные результаты — страховка на случай сбоя в демо
-eval/                # харнес оценки OpenAI Privacy Filter (P/R/F1, F2) + методика
-skills/              # (фаза 2) навык /psychodemia поверх промптов
+eval/                # PsychoPII — двуязычный (RU/EN) бенчмарк де-ид: gold, IAA, ablation слоёв (regex/Natasha/opf/LLM)
+skills/              # 10 навыков (Claude Code + Codex): анонимизация, разбор, линзы — см. INDEX.md
 briefing/            # пакет для внешнего ревью (GPT Pro): подход, фактчек, план, источники
 ```
 
@@ -35,30 +35,28 @@ cd psychodemia-2026 && claude
 # вставьте любой промпт из prompts/PROMPTS.md
 ```
 
-**2. Анонимизация русских транскриптов — Presidio + spaCy** (локально, без облака):
+**2. Анонимизация русских транскриптов — навык `session-anonymizer`** (локально, без облака):
 ```bash
-pip install presidio-analyzer presidio-anonymizer spacy
-python -m spacy download ru_core_news_lg
+cd skills/session-anonymizer && ./setup.sh   # Natasha (RU NER) + regex (scrubadub+phones) + Ollama
+python3 scripts/anonymize.py session.txt
 ```
 
-**3. Оценка англоязычной модели — OpenAI Privacy Filter** (демо + эвал на английском):
+**3. Что я пробовал для слоя 2 — OpenAI Privacy Filter** (англоязычный замер, в итоге заменён):
 ```bash
 pip install -r eval/requirements.txt
 python eval/run_opf.py && python eval/score.py   # см. eval/README.md
 ```
-> OpenAI Privacy Filter (HF `openai/privacy-filter`, Apache-2.0, ~1.5B, **апрель 2026**)
-> — **англоязычная**, на русском ненадёжна. Поэтому модель показываем на английском с
-> метриками, а русские тексты чистим через Presidio. Нет пакета `opf` на PyPI — ставится
-> через `git clone … && pip install -e .` или напрямую через `transformers.pipeline`.
+> opf (HF `openai/privacy-filter`, Apache-2.0, ~1.5B, **апрель 2026**) — **English-first**. Брал её
+> как слой 2, но на CPU ~2с/строку (не дочитала 10 КБ) и ломала JSON → **заменил детерминированным
+> regex** (scrubadub + libphonenumber) в `session-anonymizer`. Замер оставлен как урок про recall.
+> Пакета `opf` на PyPI нет — `git clone … && pip install -e .`.
 
 ## Как идёт демо
 
-1. Анонимизация одной сессии + ручная проверка квази-идентификаторов (промпты 1–2).
-2. DoT-разбор одной сессии (промпты 3–4).
-3. **Массив сессий:** тренд искажений, эволюция тем, избегание, ДЗ, альянс, change-talk
-   (промпты 5–10) — главная ценность: то, что не удержать в голове.
-4. Приверженность протоколу + кросс-клиентский анализ практики (промпты 11–12).
-5. Капстоун: превратить промпт в навык. Этическая граница.
+1. Анонимизация одной сессии + ручная проверка квази-идентификаторов.
+2. DoT-разбор одной сессии + аудит вывода.
+3. **Массив сессий:** тренд искажений, эволюция тем, избегание, ДЗ — главная ценность.
+4. Линзы ACT и психодинамики на том же корпусе + самосупервизия. Этическая граница.
 
 Каждый результат сверяется с `ANSWER-KEY.md` («что заложено vs. что нашёл AI»).
 Если живой запуск тормозит — открываем соответствующий файл из `reference-outputs/`.

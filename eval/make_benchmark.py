@@ -143,6 +143,18 @@ def main():
             A("_Not yet scored._\n"); continue
         A(f"**{res['n_docs']} documents, {res['n_gold_mentions']} gold PII mentions.** "
           "★ marks the proposed default stack for this language.")
+        ci_path = os.path.join(HERE, f"{ds}-bootstrap-ci.json")
+        if os.path.exists(ci_path):
+            ci = json.load(open(ci_path, encoding="utf-8"))
+            cr = ci["coverage_recall"]
+            extra = ""
+            if "entity_recall" in ci:
+                er = ci["entity_recall"]
+                extra = f"; entity recall {er['mean']:.2f} (CI {er['lo95']:.2f}–{er['hi95']:.2f})"
+            A("")
+            A(f"_Bootstrap 95% CI ({ci['iters']} resamples, {ci['combo']}): coverage recall "
+              f"**{cr['mean']:.2f}** (CI **{cr['lo95']:.2f}–{cr['hi95']:.2f}**){extra} — wide, as "
+              "small N demands; treat point estimates as directional._")
         A("")
         A("### Ablation leaderboard")
         A("")
@@ -280,6 +292,12 @@ def main():
       "the regex layer by design and fall to the LLM layer / manual review.")
     A("- One EN-real doc failed Ollama JSON parsing (returned no spans) — a single-doc "
       "lower bound on the ollama EN-real numbers.")
+    A("- **Non-determinism.** The Ollama (qwen) and GPT-5/Codex (IAA) steps are not fully "
+      "deterministic; qwen runs at temperature 0 and the IAA seed annotation is committed "
+      "for reproducibility, but exact spans can vary run-to-run. The bootstrap CIs and the "
+      "detector manifests bound and date the measurements.")
+    A("- Confidence intervals (bootstrap, 95%) are reported per dataset above; with N as "
+      "small as 10–32 they are wide by design.")
     A("")
 
     path = os.path.join(HERE, "BENCHMARK.md")
