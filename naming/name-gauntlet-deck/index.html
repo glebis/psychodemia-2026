@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Name Gauntlet — Naming the Session De-ID Toolkit &amp; Benchmark</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sand: #f5f0e8;
+  --ink: #2c2c2c;
+  --ink-light: #5a5a5a;
+  --accent-1: #c4756e;
+  --accent-2: #6b7c4e;
+  --accent-3: #5b7b8a;
+  --accent-4: #c9a84c;
+  --rule: #d4cfc4;
+  --bg: #faf8f3;
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 20px; -webkit-font-smoothing: antialiased; }
+body { font-family: 'EB Garamond', Georgia, serif; background: var(--bg); color: var(--ink); line-height: 1.55; padding-top: 40px; }
+
+/* ===== HERO ENTRANCE ===== */
+.hero-label, .hero h1, .hero .subtitle, .hero-meta {
+  opacity: 0; transform: translateY(18px);
+  animation: heroIn 0.7s var(--ease-out-quart) forwards;
+}
+.hero-label { animation-delay: 0.1s; }
+.hero h1 { animation-delay: 0.25s; }
+.hero .subtitle { animation-delay: 0.45s; }
+.hero-meta { animation-delay: 0.6s; }
+@keyframes heroIn { to { opacity: 1; transform: translateY(0); } }
+@keyframes slideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ===== SCROLL REVEAL ===== */
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.6s var(--ease-out-quart), transform 0.6s var(--ease-out-quart);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-stagger > .reveal:nth-child(1) { transition-delay: 0s; }
+.reveal-stagger > .reveal:nth-child(2) { transition-delay: 0.08s; }
+.reveal-stagger > .reveal:nth-child(3) { transition-delay: 0.16s; }
+.reveal-stagger > .reveal:nth-child(4) { transition-delay: 0.24s; }
+
+/* ===== H2 RULE DRAW ===== */
+h2 {
+  background-image: linear-gradient(var(--ink), var(--ink));
+  background-size: 0% 2px; background-position: bottom left; background-repeat: no-repeat;
+  padding-bottom: 0.5rem; transition: background-size 0.5s var(--ease-out-quart);
+}
+h2.visible { background-size: 100% 2px; }
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  .hero-label, .hero h1, .hero .subtitle, .hero-meta { animation: none; opacity: 1; transform: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  h2 { background-size: 100% 2px; transition: none; }
+  .slide { transition: none; }
+}
+
+/* ===== MODE BAR ===== */
+.mode-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: var(--ink); color: white;
+  display: flex; align-items: center; justify-content: center; gap: 1rem;
+  padding: 0.5rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.6rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  transition: transform 0.35s var(--ease-out-quart), opacity 0.35s var(--ease-out-quart);
+}
+.mode-bar.hidden { transform: translateY(-100%); opacity: 0; pointer-events: none; }
+.mode-bar button { background: none; border: 1px solid rgba(255,255,255,0.3); color: white; padding: 0.3em 1em; font-family: inherit; font-size: inherit; letter-spacing: inherit; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 0.2s; }
+.mode-bar button.active { background: white; color: var(--ink); border-color: white; }
+.mode-bar button:hover { border-color: white; }
+
+/* ===== ARTICLE MODE ===== */
+.hero { min-height: 65vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 4rem 2rem 3rem; background: var(--sand); border-bottom: 3px solid var(--ink); position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; }
+.hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; position: relative; z-index: 1; }
+.hero-label { font-family: 'DM Sans', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-3); margin-bottom: 1.5rem; }
+.hero h1 { font-size: 3.4rem; line-height: 1.05; font-weight: 700; letter-spacing: -0.02em; max-width: 16em; margin-bottom: 1.2rem; }
+.hero .subtitle { font-size: 1.35rem; font-style: italic; color: var(--ink-light); max-width: 32em; line-height: 1.4; }
+.hero-meta { margin-top: 2rem; font-family: 'DM Sans', sans-serif; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-light); display: flex; gap: 2rem; flex-wrap: wrap; }
+.container { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
+
+.section { margin-bottom: 4rem; }
+.section-number { font-family: 'DM Sans', sans-serif; font-size: 0.55rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-1); margin-bottom: 0.5rem; }
+h2 { font-size: 2.4rem; font-weight: 700; line-height: 1.1; letter-spacing: -0.015em; margin-bottom: 1.5rem; }
+h3 { font-size: 1.4rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.8rem; }
+p { font-size: 1rem; line-height: 1.6; margin-bottom: 1rem; max-width: 40em; }
+
+.data-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.85rem; }
+.data-table th { font-family: 'DM Sans', sans-serif; font-size: 0.55rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; text-align: left; padding: 0.8rem 1rem; border-bottom: 2px solid var(--ink); color: var(--ink-light); }
+.data-table td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--rule); vertical-align: top; line-height: 1.4; }
+.data-table tr:last-child td { border-bottom: 2px solid var(--ink); }
+.data-table .free { color: var(--accent-2); font-weight: 600; }
+.data-table .taken { color: var(--accent-1); font-weight: 600; }
+
+.divider { border: none; border-top: 1px solid var(--rule); margin: 3rem 0; }
+
+/* ===== VERDICT BADGES ===== */
+.badge { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.55rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.35em 0.85em; border-radius: 2px; vertical-align: middle; }
+.badge-killed { background: var(--accent-1); color: white; }
+.badge-deprioritized { background: var(--accent-4); color: var(--ink); }
+.badge-med { background: var(--accent-3); color: white; }
+.badge-locked { background: var(--accent-2); color: white; }
+
+.footer { border-top: 2px solid var(--ink); padding: 2rem 0; margin-top: 4rem; }
+.footer-inner { max-width: 1100px; margin: 0 auto; padding: 0 2rem; font-family: 'DM Sans', sans-serif; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); }
+
+/* ===== SLIDE MODE ===== */
+body.slide-mode .article-content { display: none; }
+body.slide-mode .slide-deck { display: flex; }
+body:not(.slide-mode) .slide-deck { display: none; }
+
+.slide-deck { position: fixed; inset: 0; top: 40px; flex-direction: column; align-items: center; justify-content: center; background: var(--bg); overflow: hidden; }
+
+.slide {
+  position: absolute; inset: 0; top: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 3rem 5rem;
+  opacity: 0; display: none; transform: translateY(12px);
+  pointer-events: none;
+}
+.slide.active {
+  opacity: 1; display: flex; transform: translateY(0); pointer-events: auto;
+  animation: slideIn 0.4s var(--ease-out-quart);
+}
+.slide-inner { max-width: 1000px; width: 100%; }
+.slide .slide-label { font-family: 'DM Sans', sans-serif; font-size: 0.55rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-3); margin-bottom: 1rem; }
+.slide h2 { font-size: 2.6rem; line-height: 1.08; background: none; padding: 0; margin-bottom: 0.6rem; }
+.slide .meaning { font-style: italic; color: var(--ink-light); font-size: 1.1rem; margin-bottom: 1rem; }
+.slide p { font-size: 1.05rem; line-height: 1.55; max-width: 36em; }
+.slide .data-table { font-size: 0.8rem; margin: 1rem 0; }
+.slide .data-table td, .slide .data-table th { padding: 0.45rem 0.9rem; }
+.slide .collision { font-size: 0.95rem; max-width: 40em; margin: 1rem 0 1.2rem; }
+.slide .collision .flag { font-family: 'DM Sans', sans-serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-1); }
+
+.slide .slide-two-col { display: grid; grid-template-columns: 1.1fr 1fr; gap: 2.5rem; align-items: start; margin-top: 0.5rem; }
+
+.slide .three-modes { margin-top: 1rem; }
+.slide .three-modes .mode-row { padding: 1rem 0; border-bottom: 1px solid var(--rule); }
+.slide .three-modes .mode-row:last-child { border-bottom: none; }
+.slide .three-modes .mode-num { font-family: 'DM Sans', sans-serif; font-weight: 700; color: var(--accent-1); font-size: 0.7rem; letter-spacing: 0.1em; }
+.slide .three-modes h4 { font-size: 1.15rem; font-weight: 600; margin: 0.2rem 0; }
+.slide .three-modes p { font-size: 0.95rem; color: var(--ink-light); margin: 0; max-width: 44em; }
+
+.slide .takeaway { font-size: 1.15rem; font-weight: 600; margin-top: 1.2rem; max-width: 42em; }
+
+.slide .lessons { margin-top: 1.5rem; }
+.slide .lessons li { font-family: 'EB Garamond', serif; font-size: 1.05rem; margin: 0.6rem 0 0.6rem 1.2rem; line-height: 1.5; max-width: 44em; }
+
+/* Slide nav */
+.slide-nav {
+  position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 100;
+  display: none; align-items: center; gap: 1.5rem;
+  font-family: 'DM Sans', sans-serif;
+  transition: transform 0.35s var(--ease-out-quart), opacity 0.35s var(--ease-out-quart);
+}
+body.slide-mode .slide-nav { display: flex; }
+.slide-nav.hidden { transform: translateX(-50%) translateY(120%); opacity: 0; pointer-events: none; }
+.slide-nav button { background: none; border: none; color: var(--ink); cursor: pointer; font-size: 2rem; line-height: 1; padding: 0.3em 0.5em; border-radius: 3px; transition: background 0.2s, color 0.2s; }
+.slide-nav button:hover { background: var(--sand); }
+.slide-dots { display: flex; gap: 7px; }
+.slide-dots span { width: 9px; height: 9px; border-radius: 50%; background: var(--rule); transition: all 0.3s var(--ease-out-quart); cursor: pointer; }
+.slide-dots span:hover { background: var(--ink-light); }
+.slide-dots span.active { background: var(--accent-1); transform: scale(1.4); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  html { font-size: 17px; }
+  .hero h1 { font-size: 2.2rem; }
+  .slide { padding: 2rem 1.5rem; overflow-y: auto; }
+  .slide .slide-two-col { grid-template-columns: 1fr; }
+  .hero-meta { flex-direction: column; gap: 0.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- MODE BAR (audio engine removed; internal review deck, slides mode) -->
+<div class="mode-bar hidden">
+  <button id="btn-article" class="active" onclick="setMode('article')" aria-label="Switch to article mode">Article</button>
+  <button id="btn-slides" onclick="setMode('slides')" aria-label="Switch to slides mode">Slides</button>
+</div>
+
+<!-- ===== ARTICLE CONTENT ===== -->
+<div class="article-content">
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-label">Internal Review &bull; Naming Decision</div>
+      <h1>Name Gauntlet — Naming the Session De-ID Toolkit &amp; Benchmark</h1>
+      <p class="subtitle">Pressure-testing 6 candidate names: domains, collisions, ownability.</p>
+      <div class="hero-meta">
+        <span>6 finalists</span>
+        <span>WHOIS / USPTO / arXiv checked</span>
+        <span>generated by the name-gauntlet skill</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <section class="section">
+      <div class="section-number">01 / Framework</div>
+      <h2>The three failure modes</h2>
+      <p>A name dies for one of three reasons. The first is the one most people miss; the last is the one they trust by mistake.</p>
+      <div class="three-modes">
+        <div class="mode-row"><span class="mode-num">01</span><h4>Adjacent-domain collision is the worst</h4><p>It kills a name even when the literal string is free. If a live product in your own vertical already uses the word, the namespace is poisoned regardless of registry availability.</p></div>
+        <div class="mode-row"><span class="mode-num">02</span><h4>Descriptive / generic = domain-free but weak</h4><p>Plain labels are usually available precisely because nobody can own them. That same plainness makes them weak to trademark challenge and impossible to win on SEO.</p></div>
+        <div class="mode-row"><span class="mode-num">03</span><h4>Search visibility &ne; availability</h4><p>A quiet search result does not mean the name is free. Always verify against WHOIS, the registry, and trademark databases before trusting it.</p></div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section class="section">
+      <div class="section-number">02 / Finalists</div>
+      <h2>Praxio <span class="badge badge-killed">Killed</span></h2>
+      <p><em>praxis / practitioner's craft.</em></p>
+      <table class="data-table"><thead><tr><th>TLD</th><th>Status</th></tr></thead><tbody>
+        <tr><td>.com</td><td class="taken">Taken</td></tr><tr><td>.ai</td><td class="taken">Taken</td></tr>
+        <tr><td>.io</td><td class="taken">Taken</td></tr><tr><td>.app</td><td class="taken">Taken</td></tr></tbody></table>
+      <p>Collisions: praxio.com (LMS), praxio.ai (AI SaaS for pros), abandoned USPTO SaaS mark. <strong>ADJACENT-DOMAIN:</strong> Praxis EMR is a live mental-health EHR. <strong>Verdict:</strong> killed — adjacent-domain collision plus a saturated string.</p>
+
+      <h3>Dyad / Dyado <span class="badge badge-deprioritized">Deprioritized</span></h3>
+      <p><em>the helping dyad.</em></p>
+      <p><strong>Dyad</strong> is gone: live USPTO trademark "DYAD" (AI app-builder), dyad.sh (16.8k-star local-AI tool with identical positioning), dyad.ai (healthcare), and a PyPI package named <code>dyad</code> — killed outright. <strong>Dyado</strong> is collision-free (dyado.org/.ai/.io all free), but carries a fatal <strong>ARITY FLAW</strong>: "dyad" means two people, yet the tool handles group, family, and multi-party sessions. <strong>Verdict:</strong> deprioritized — the name misnames the product.</p>
+
+      <h3>Sessio <span class="badge badge-killed">Killed</span></h3>
+      <p><em>session.</em></p>
+      <table class="data-table"><thead><tr><th>TLD</th><th>Status</th></tr></thead><tbody>
+        <tr><td>.org</td><td class="taken">Taken</td></tr><tr><td>.com</td><td class="taken">Taken</td></tr>
+        <tr><td>.ai</td><td class="taken">Taken</td></tr><tr><td>.io</td><td class="taken">Taken</td></tr></tbody></table>
+      <p>Collision: sessio.base44.app is a booking app for therapists, coaches, and consultants — the <strong>same vertical</strong>. <strong>Verdict:</strong> killed — adjacent-domain collision.</p>
+
+      <h3>Confero <span class="badge badge-med">Med</span></h3>
+      <p><em>confer / bring together (group-friendly).</em></p>
+      <table class="data-table"><thead><tr><th>TLD</th><th>Status</th></tr></thead><tbody>
+        <tr><td>.org</td><td class="taken">Taken</td></tr><tr><td>.com</td><td class="taken">Taken</td></tr>
+        <tr><td>.ai</td><td class="taken">Taken</td></tr></tbody></table>
+      <p>Collisions are crowded but non-adjacent: Confero Inc (CX research), Confero Group (finance), Confero Technologies (fintech), Televic Confero (meeting software). <strong>Verdict:</strong> med — an ownable mark, but the domains are gone and the namespace is busy.</p>
+
+      <h3>ClientPII <span class="badge badge-med">Med-High</span></h3>
+      <p><em>the client's PII.</em></p>
+      <table class="data-table"><thead><tr><th>TLD</th><th>Status</th></tr></thead><tbody>
+        <tr><td>.org</td><td class="free">Free</td></tr><tr><td>.com</td><td class="free">Free</td></tr>
+        <tr><td>.ai</td><td class="free">Free</td></tr><tr><td>.io</td><td class="free">Free</td></tr>
+        <tr><td>.app</td><td class="taken">Taken</td></tr></tbody></table>
+      <p>No exact collision, but the term is descriptive and generic — "client PII" is ubiquitous — which means a weak trademark and poor SEO. <strong>Verdict:</strong> med-high ownability — a great plain label, a weak brand.</p>
+
+      <h3>CONFIDE <span class="badge badge-locked">Locked</span></h3>
+      <p><em>CONFidential-Information DE-identification (Evaluation) — also what clients do.</em></p>
+      <table class="data-table"><thead><tr><th>Scope</th><th>Status</th></tr></thead><tbody>
+        <tr><td>Product domains (.all)</td><td class="taken">All taken (Confide messenger + Confido Health cluster)</td></tr>
+        <tr><td>As a benchmark name</td><td class="free">Low citation-collision</td></tr></tbody></table>
+      <p>As a product brand it fails — every domain is taken. As a <strong>benchmark</strong> name, citation-collision is low: there is no de-id/NLP CONFIDE benchmark, only unrelated arXiv namesakes in PDEs and biomolecular structure. <strong>Verdict:</strong> locked as the benchmark name; optional subtitle "CONFIDE-RU/EN".</p>
+    </section>
+
+    <hr class="divider">
+
+    <section class="section">
+      <div class="section-number">03 / Comparison</div>
+      <h2>The ranked field</h2>
+      <table class="data-table"><thead><tr><th>Name</th><th>Domains</th><th>Adjacent clash?</th><th>Ownability</th><th>Verdict</th></tr></thead><tbody>
+        <tr><td>CONFIDE</td><td>All taken (product); free as benchmark</td><td>No (benchmark)</td><td>High (benchmark)</td><td><span class="badge badge-locked">Locked</span></td></tr>
+        <tr><td>ClientPII</td><td>.org/.com/.ai/.io free</td><td>No</td><td>Med-high (label), low (brand)</td><td><span class="badge badge-med">Med-High</span></td></tr>
+        <tr><td>Confero</td><td>All taken</td><td>No</td><td>Med (busy)</td><td><span class="badge badge-med">Med</span></td></tr>
+        <tr><td>Dyad / Dyado</td><td>Dyad taken; Dyado free</td><td>Dyad: yes</td><td>Low (arity flaw)</td><td><span class="badge badge-deprioritized">Deprioritized</span></td></tr>
+        <tr><td>Sessio</td><td>All taken</td><td>Yes</td><td>Low</td><td><span class="badge badge-killed">Killed</span></td></tr>
+        <tr><td>Praxio</td><td>All taken</td><td>Yes</td><td>Low</td><td><span class="badge badge-killed">Killed</span></td></tr>
+      </tbody></table>
+      <p>As a benchmark name &rarr; CONFIDE. As a product/umbrella brand &rarr; all six fail; the umbrella name is still open.</p>
+    </section>
+
+    <hr class="divider">
+
+    <section class="section">
+      <div class="section-number">04 / Recommendation</div>
+      <h2>Lock it</h2>
+      <p><strong>Benchmark = CONFIDE</strong> &#10003; (locked). <strong>Product / umbrella = OPEN</strong> — it needs a coined brand if it ever goes commercial; ClientPII works only as a plain descriptive label, not as a brand.</p>
+      <p>The three lessons, restated:</p>
+      <ol class="lessons">
+        <li>Adjacent-domain collision is the worst — it kills a name even when the string is free.</li>
+        <li>Descriptive / generic names are domain-free but weak to trademark and SEO.</li>
+        <li>Search visibility is not availability — verify with WHOIS and the registry.</li>
+      </ol>
+    </section>
+  </div>
+
+  <footer class="footer"><div class="footer-inner">generated by the name-gauntlet skill</div></footer>
+</div>
+
+<!-- ===== SLIDE DECK ===== -->
+<div class="slide-deck">
+
+  <!-- 1: TITLE -->
+  <div class="slide active" data-slide="0">
+    <div class="slide-inner">
+      <div class="slide-label">Internal Review &bull; Naming Decision</div>
+      <h2 style="font-size:3.4rem;">Name Gauntlet</h2>
+      <p style="font-style:italic;color:var(--ink-light);font-size:1.4rem;margin-top:0.6rem;max-width:24em;">Naming the Session De-ID Toolkit &amp; Benchmark</p>
+      <p style="margin-top:1.4rem;font-size:1.2rem;max-width:34em;">Pressure-testing 6 candidate names: domains, collisions, ownability.</p>
+      <p style="font-family:'DM Sans';font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-light);margin-top:2rem;">6 finalists &bull; WHOIS / USPTO / arXiv checked &bull; generated by the name-gauntlet skill</p>
+    </div>
+  </div>
+
+  <!-- 2: FRAMEWORK -->
+  <div class="slide" data-slide="1">
+    <div class="slide-inner">
+      <div class="slide-label">Framework</div>
+      <h2>The three failure modes</h2>
+      <div class="three-modes">
+        <div class="mode-row"><span class="mode-num">01</span><h4>Adjacent-domain collision is the worst</h4><p>Kills a name even when the literal string is free. A live product in your own vertical poisons the namespace regardless of registry availability.</p></div>
+        <div class="mode-row"><span class="mode-num">02</span><h4>Descriptive / generic = domain-free but weak</h4><p>Plain labels are available because nobody can own them — which makes them weak to trademark challenge and impossible to win on SEO.</p></div>
+        <div class="mode-row"><span class="mode-num">03</span><h4>Search visibility &ne; availability</h4><p>A quiet search result is not proof. Verify against WHOIS, the registry, and trademark databases before trusting a name.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3: PRAXIO -->
+  <div class="slide" data-slide="2">
+    <div class="slide-inner">
+      <div class="slide-label">Finalist 1 of 6</div>
+      <h2>Praxio <span class="badge badge-killed">Killed</span></h2>
+      <p class="meaning">praxis / practitioner's craft.</p>
+      <div class="slide-two-col">
+        <table class="data-table"><thead><tr><th>TLD</th><th>Status</th></tr></thead><tbody>
+          <tr><td>.com</td><td class="taken">Taken</td></tr><tr><td>.ai</td><td class="taken">Taken</td></tr>
+          <tr><td>.io</td><td class="taken">Taken</td></tr><tr><td>.app</td><td class="taken">Taken</td></tr></tbody></table>
+        <div class="collision"><p>praxio.com (LMS), praxio.ai (AI SaaS for pros), abandoned USPTO SaaS mark.</p>
+          <p><span class="flag">Adjacent-domain:</span> Praxis EMR = live mental-health EHR.</p></div>
+      </div>
+      <p class="takeaway">Adjacent-domain collision plus a saturated string. Dead on arrival.</p>
+    </div>
+  </div>
+
+  <!-- 4: DYAD / DYADO -->
+  <div class="slide" data-slide="3">
+    <div class="slide-inner">
+      <div class="slide-label">Finalist 2 of 6</div>
+      <h2>Dyad / Dyado <span class="badge badge-deprioritized">Deprioritized</span></h2>
+      <p class="meaning">the helping dyad.</p>
+      <div class="slide-two-col">
+        <table class="data-table"><thead><tr><th>Variant</th><th>Status</th></tr></thead><tbody>
+          <tr><td>Dyad (.sh/.ai)</td><td class="taken">Taken</td></tr>
+          <tr><td>dyado.org</td><td class="free">Free</td></tr>
+          <tr><td>dyado.ai</td><td class="free">Free</td></tr>
+          <tr><td>dyado.io</td><td class="free">Free</td></tr></tbody></table>
+        <div class="collision"><p>Dyad: live USPTO TM "DYAD" (AI app-builder), dyad.sh (16.8k-star local-AI tool, identical positioning), dyad.ai (healthcare), PyPI <code>dyad</code> &rarr; killed.</p>
+          <p><span class="flag">Arity flaw:</span> "dyad" = two people, yet the tool handles group / family / multi-party sessions.</p></div>
+      </div>
+      <p class="takeaway">Dyado is collision-free but misnames the product. Deprioritized.</p>
+    </div>
+  </div>
+
+  <!-- 5: SESSIO -->
+  <div class="slide" data-slide="4">
+    <div class="slide-inner">
+      <div class="slide-label">Finalist 3 of 6</div>
+      <h2>Sessio <span class="badge badge-killed">Killed</span></h2>
+      <p class="meaning">session.</p>
+      <div class="slide-two-col">
+        <table class="data-table"><thead><tr><th>TLD</th><th>Status</th></tr></thead><tbody>
+          <tr><td>.org</td><td class="taken">Taken</td></tr><tr><td>.com</td><td class="taken">Taken</td></tr>
+          <tr><td>.ai</td><td class="taken">Taken</td></tr><tr><td>.io</td><td class="taken">Taken</td></tr></tbody></table>
+        <div class="collision"><p><span class="flag">Adjacent-domain:</span> sessio.base44.app = booking app for therapists, coaches, and consultants — the same vertical.</p></div>
+      </div>
+      <p class="takeaway">Adjacent-domain collision in our exact vertical. Killed.</p>
+    </div>
+  </div>
+
+  <!-- 6: CONFERO -->
+  <div class="slide" data-slide="5">
+    <div class="slide-inner">
+      <div class="slide-label">Finalist 4 of 6</div>
+      <h2>Confero <span class="badge badge-med">Med</span></h2>
+      <p class="meaning">confer / bring together (group-friendly).</p>
+      <div class="slide-two-col">
+        <table class="data-table"><thead><tr><th>TLD</th><th>Status</th></tr></thead><tbody>
+          <tr><td>.org</td><td class="taken">Taken</td></tr><tr><td>.com</td><td class="taken">Taken</td></tr>
+          <tr><td>.ai</td><td class="taken">Taken</td></tr></tbody></table>
+        <div class="collision"><p>Crowded but non-adjacent: Confero Inc (CX research), Confero Group (finance), Confero Technologies (fintech), Televic Confero (meeting software).</p></div>
+      </div>
+      <p class="takeaway">Ownable mark, but domains are gone and the namespace is busy.</p>
+    </div>
+  </div>
+
+  <!-- 7: CLIENTPII -->
+  <div class="slide" data-slide="6">
+    <div class="slide-inner">
+      <div class="slide-label">Finalist 5 of 6</div>
+      <h2>ClientPII <span class="badge badge-med">Med-High</span></h2>
+      <p class="meaning">the client's PII.</p>
+      <div class="slide-two-col">
+        <table class="data-table"><thead><tr><th>TLD</th><th>Status</th></tr></thead><tbody>
+          <tr><td>.org</td><td class="free">Free</td></tr><tr><td>.com</td><td class="free">Free</td></tr>
+          <tr><td>.ai</td><td class="free">Free</td></tr><tr><td>.io</td><td class="free">Free</td></tr>
+          <tr><td>.app</td><td class="taken">Taken</td></tr></tbody></table>
+        <div class="collision"><p>No exact collision, but descriptive / generic — "client PII" is ubiquitous &rarr; weak trademark, poor SEO.</p></div>
+      </div>
+      <p class="takeaway">A great plain label, a weak brand. Med-high ownability.</p>
+    </div>
+  </div>
+
+  <!-- 8: CONFIDE -->
+  <div class="slide" data-slide="7">
+    <div class="slide-inner">
+      <div class="slide-label">Finalist 6 of 6</div>
+      <pre aria-label="CONFIDE" style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;line-height:1.05;font-size:clamp(9px,1.5vw,17px);white-space:pre;margin:0 0 .4rem;overflow-x:auto;color:var(--accent-2)">
+  ___ ___  _  _ ___ ___ ___  ___
+ / __/ _ \| \| | __|_ _|   \| __|
+| (_| (_) | .` | _| | || |) | _|
+ \___\___/|_|\_|_| |___|___/|___|
+</pre>
+      <h2 style="margin-top:0">Confidential Filtering of Identifying Details <span class="badge badge-locked">Locked</span></h2>
+      <p class="meaning">A bilingual (RU/EN) de-identification benchmark for therapy / coaching / mentoring session transcripts. — <strong>CON</strong>fidential <strong>F</strong>iltering of <strong>I</strong>dentifying <strong>DE</strong>tails.</p>
+      <blockquote style="font-style:italic;border:0;padding:0;margin:.55rem 0;opacity:.82">&ldquo;Confide in me.&rdquo; &mdash; Kylie Minogue, <em>Confide in Me</em> (1994). <span style="font-style:normal">A problem understood is a problem shared &mdash; safely.</span></blockquote>
+      <div class="slide-two-col">
+        <table class="data-table"><thead><tr><th>Scope</th><th>Status</th></tr></thead><tbody>
+          <tr><td>Product domains</td><td class="taken">All taken</td></tr>
+          <tr><td>Benchmark name</td><td class="free">Low collision</td></tr></tbody></table>
+        <div class="collision"><p>All domains taken (Confide messenger + Confido Health cluster) &rarr; not a product brand. As a benchmark: low citation-collision — no de-id/NLP CONFIDE benchmark; only unrelated arXiv namesakes in PDEs + biomolecular structure.</p></div>
+      </div>
+      <p class="takeaway">Locked as the benchmark name. Optional subtitle "CONFIDE-RU/EN".</p>
+    </div>
+  </div>
+
+  <!-- 9: COMPARISON -->
+  <div class="slide" data-slide="8">
+    <div class="slide-inner">
+      <div class="slide-label">Comparison</div>
+      <h2>The ranked field</h2>
+      <table class="data-table"><thead><tr><th>Name</th><th>Domains</th><th>Adjacent clash?</th><th>Ownability</th><th>Verdict</th></tr></thead><tbody>
+        <tr><td>CONFIDE</td><td>Taken (product); free as benchmark</td><td>No (benchmark)</td><td>High (benchmark)</td><td><span class="badge badge-locked">Locked</span></td></tr>
+        <tr><td>ClientPII</td><td>.org/.com/.ai/.io free</td><td>No</td><td>Med-high label, low brand</td><td><span class="badge badge-med">Med-High</span></td></tr>
+        <tr><td>Confero</td><td>All taken</td><td>No</td><td>Med (busy)</td><td><span class="badge badge-med">Med</span></td></tr>
+        <tr><td>Dyad / Dyado</td><td>Dyad taken; Dyado free</td><td>Dyad: yes</td><td>Low (arity flaw)</td><td><span class="badge badge-deprioritized">Deprio</span></td></tr>
+        <tr><td>Sessio</td><td>All taken</td><td>Yes</td><td>Low</td><td><span class="badge badge-killed">Killed</span></td></tr>
+        <tr><td>Praxio</td><td>All taken</td><td>Yes</td><td>Low</td><td><span class="badge badge-killed">Killed</span></td></tr>
+      </tbody></table>
+      <p style="font-weight:600;margin-top:0.8rem;">As a benchmark name &rarr; CONFIDE. As a product/umbrella brand &rarr; all six fail; umbrella name still open.</p>
+    </div>
+  </div>
+
+  <!-- 10: RECOMMENDATION -->
+  <div class="slide" data-slide="9">
+    <div class="slide-inner">
+      <div class="slide-label">Recommendation</div>
+      <h2>Lock it</h2>
+      <p style="font-size:1.2rem;max-width:40em;"><strong>Benchmark = CONFIDE</strong> &#10003; (locked). <strong>Product / umbrella = OPEN</strong> — needs a coined brand if it goes commercial; ClientPII works only as a plain descriptive label.</p>
+      <ol class="lessons">
+        <li>Adjacent-domain collision is the worst — it kills a name even when the string is free.</li>
+        <li>Descriptive / generic names are domain-free but weak to trademark and SEO.</li>
+        <li>Search visibility is not availability — verify with WHOIS and the registry.</li>
+      </ol>
+      <p style="font-family:'DM Sans';font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-light);margin-top:1.8rem;">generated by the name-gauntlet skill</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- Slide navigation -->
+<div class="slide-nav hidden">
+  <button onclick="prevSlide()" title="Previous slide">&larr;</button>
+  <div class="slide-dots" id="slide-dots"></div>
+  <button onclick="nextSlide()" title="Next slide">&rarr;</button>
+</div>
+
+<script>
+// ===== ZONE-BASED BAR VISIBILITY =====
+let barVisMode = 'zone';
+const modeBar = document.querySelector('.mode-bar');
+const slideNav = document.querySelector('.slide-nav');
+let barHideTimer = null;
+let navHideTimer = null;
+
+function updateBarVis(mouseY) {
+  if (barVisMode === 'show') { modeBar.classList.remove('hidden'); slideNav.classList.remove('hidden'); return; }
+  if (barVisMode === 'hide') { modeBar.classList.add('hidden'); slideNav.classList.add('hidden'); return; }
+  const vh = window.innerHeight;
+  if (mouseY <= vh * 0.2) {
+    modeBar.classList.remove('hidden');
+    clearTimeout(barHideTimer);
+    barHideTimer = setTimeout(() => modeBar.classList.add('hidden'), 2000);
+  }
+  if (mouseY >= vh * 0.8 && document.body.classList.contains('slide-mode')) {
+    slideNav.classList.remove('hidden');
+    clearTimeout(navHideTimer);
+    navHideTimer = setTimeout(() => slideNav.classList.add('hidden'), 2000);
+  }
+}
+document.addEventListener('mousemove', e => updateBarVis(e.clientY));
+document.addEventListener('touchstart', e => updateBarVis(e.touches[0].clientY));
+document.addEventListener('focusin', () => { modeBar.classList.remove('hidden'); clearTimeout(barHideTimer); barHideTimer = setTimeout(() => { if (barVisMode === 'zone') modeBar.classList.add('hidden'); }, 3000); });
+modeBar.addEventListener('mouseenter', () => { clearTimeout(barHideTimer); modeBar.classList.remove('hidden'); });
+modeBar.addEventListener('mouseleave', () => { barHideTimer = setTimeout(() => { if (barVisMode === 'zone') modeBar.classList.add('hidden'); }, 1500); });
+slideNav.addEventListener('mouseenter', () => { clearTimeout(navHideTimer); slideNav.classList.remove('hidden'); });
+slideNav.addEventListener('mouseleave', () => { navHideTimer = setTimeout(() => { if (barVisMode === 'zone') slideNav.classList.add('hidden'); }, 1500); });
+
+document.addEventListener('keydown', e => {
+  if (e.shiftKey && e.key === '>') { e.preventDefault(); barVisMode = barVisMode === 'zone' ? 'show' : barVisMode === 'show' ? 'hide' : 'zone'; updateBarVis(-1); }
+});
+
+// ===== MODE =====
+function setMode(mode) {
+  document.body.classList.toggle('slide-mode', mode === 'slides');
+  document.getElementById('btn-article').classList.toggle('active', mode === 'article');
+  document.getElementById('btn-slides').classList.toggle('active', mode === 'slides');
+  if (mode === 'slides') goToSlide(currentSlide);
+}
+
+// ===== SLIDES =====
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+let currentSlide = 0;
+
+const dotsContainer = document.getElementById('slide-dots');
+for (let i = 0; i < totalSlides; i++) {
+  const dot = document.createElement('span');
+  if (i === 0) dot.classList.add('active');
+  dot.addEventListener('click', () => goToSlide(i));
+  dotsContainer.appendChild(dot);
+}
+
+function goToSlide(n) {
+  slides.forEach(s => s.classList.remove('active'));
+  slides[n].classList.add('active');
+  document.querySelectorAll('.slide-dots span').forEach((d, i) => d.classList.toggle('active', i === n));
+  currentSlide = n;
+}
+function nextSlide() { if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1); }
+function prevSlide() { if (currentSlide > 0) goToSlide(currentSlide - 1); }
+
+document.addEventListener('keydown', e => {
+  if (!document.body.classList.contains('slide-mode')) return;
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+});
+
+// ===== SCROLL REVEAL (article mode only) =====
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.article-content .section, .article-content .data-table').forEach(el => el.classList.add('reveal'));
+  document.querySelectorAll('.article-content h2').forEach(el => el.classList.add('reveal'));
+
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); } });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+}
+</script>
+</body>
+</html>
