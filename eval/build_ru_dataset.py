@@ -67,6 +67,12 @@ CLIENTS = {
         # Session dates (frontmatter DD.MM.YYYY). %V → per-value entity_id so each
         # distinct date is its own entity. No deterministic RU layer tags dates.
         ("a-date-%V",    "DATE",       "quasi",  True,  [r"\b\d{1,2}\.\d{2}\.20\d{2}\b", rf"{WB}15\s+январ\w*{WE}"]),
+        # --- v2 adjudicated additions (IAA blind spots, ru-a-s01) ---
+        # Spelled-out policy/phone read aloud at the card check — real PII the regex
+        # layer structurally cannot catch (hence llm_required), missed by v1 gold.
+        ("a-policy-spelled", "ID",    "direct", True, [r"семь-семь-два-два, четыре-четыре-пять-пять, восемь-восемь-один-один"]),
+        ("a-phone-spelled",  "PHONE", "direct", True, [r"плюс семь, девять-один-шесть, пять-пять-пять, двадцать один, сорок три"]),
+        ("a-careerlevel",    "PROFESSION", "quasi", True, [rf"{WB}младшего специалиста{WE}"]),
     ],
     "b": [
         ("b-igor",       "PERSON",     "direct", False, [rf"{WB}Игор[ьяею]\w*{WE}", rf"{WB}Соколов\w*{WE}", rf"{WB}Анатольевич\w*{WE}"]),
@@ -87,8 +93,16 @@ CLIENTS = {
         ("b-age",        "AGE",        "quasi",  True,  [rf"{WB}сорок один{WE}", r"(?<![:\d])41(?![:\d])"]),
         ("b-profession", "PROFESSION", "quasi",  True,  [rf"{WB}программист\w*{WE}"]),
         ("b-date-%V",    "DATE",       "quasi",  True,  [r"\b\d{1,2}\.\d{2}\.20\d{2}\b", rf"{WB}третьего феврал\w*{WE}", rf"{WB}3\s+феврал\w*{WE}"]),
+        # --- v2 adjudicated additions (IAA blind spots, client-b) ---
+        ("b-ekaterinburg", "LOCATION",  "quasi", False, [rf"Екатеринбург\w*", rf"екатеринбург\w*"]),
+        ("b-role",         "PROFESSION","quasi", True,  [rf"{WB}тимлид\w*{WE}", rf"{WB}[Бб]экенд\w*{WE}"]),
+        ("b-igor-latin",   "PERSON",    "direct", False, [r"(?<=client_id: )igor"]),
     ],
 }
+
+# Entity ids added during IAA adjudication (so they can be filtered/counted as v2).
+ADJUDICATED = {"a-policy-spelled", "a-phone-spelled", "a-careerlevel",
+               "b-ekaterinburg", "b-role", "b-igor-latin"}
 
 
 def find_spans(text, entities):
@@ -103,6 +117,7 @@ def find_spans(text, entities):
                     "type": typ, "value": m.group(),
                     "identifier_class": cls, "entity_id": eid,
                     "llm_required": llm,
+                    "adjudicated": ent_id in ADJUDICATED,
                 })
     # De-duplicate exact-overlapping spans from multiple patterns; keep longest.
     spans.sort(key=lambda s: (s["start"], -(s["end"] - s["start"])))
@@ -121,6 +136,7 @@ ROLE = {
     "a-boss": "third_party", "a-neuromed": "institution", "a-yandex": "institution",
     "b-igor": "client", "b-svetlana": "partner", "b-alexey": "relative",
     "b-pavel": "third_party", "b-kontur": "institution", "b-sber": "institution",
+    "b-igor-latin": "client", "b-ekaterinburg": "institution",
 }
 
 # Turn markers come in two forms across the corpus (Codex audit #2):

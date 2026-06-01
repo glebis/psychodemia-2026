@@ -6,15 +6,15 @@ Default stack: **natasha+regex+ollama**. Attack budget: `qwen2.5:3b`, temp 0.4, 
 
 | Client | top-1 hits | top-3 hits | of N | residual risk |
 |---|--:|--:|--:|---|
-| a | 0 | 0 | 5 | **LOW** |
-| b | 0 | 0 | 5 | **MEDIUM** |
+| a | 0 | 0 | 5 | **MEDIUM** |
+| b | 1 | 1 | 5 | **MEDIUM** |
 
 Per-attribute (top-3 correct?):
 
 | Client | profession | employer | city | age | medication |
 |---|--:|--:|--:|--:|--:|
 | a | · | · | · | · | · |
-| b | · | · | · | · | · |
+| b | · | · | · | ✓ | · |
 
 ## Quasi-identifier combination (k-anonymity-style singling-out)
 
@@ -23,7 +23,7 @@ Direct identifiers can be perfectly masked and a person still singled out by the
 | Client | surviving quasi types | expected matches | singles out? |
 |---|---|--:|---|
 | a | MEDICATION, PROFESSION | 3504.0 | no |
-| b | AGE, DATE, MEDICATION | 8342.86 | no |
+| b | AGE, DATE, LOCATION, MEDICATION, PROFESSION | 8342.86 | no |
 
 ## Utility — downstream CBT-signal preservation (orig vs redacted)
 
@@ -34,6 +34,6 @@ Does the de-identified transcript still support the clinical analysis it exists 
 | a | 100% |
 | b | 82% |
 
-**Char-level non-PII preservation:** 99.8% of non-PII text survives redaction (the deterministic utility floor; complement of over-redaction).
+**Char-level non-PII preservation:** 100.0% of non-PII text survives redaction (the deterministic utility floor; complement of over-redaction).
 
 _Privacy↑ and utility↑ are in tension: the same masking that lowers attacker success also risks erasing clinical signal. The default stack is tuned for recall (privacy); this table is the cost side._

@@ -81,6 +81,8 @@ def main():
     A("")
     A("## Datasheet (Datasheets for Datasets / Data Statements for NLP)")
     A("")
+    A("> Full datasheet + data statement: **`DATASHEET.md`**. Summary below.")
+    A("")
     A("- **Motivation.** Compare detector layers (regex, Natasha RU-NER, the OpenAI "
       "Privacy Filter, and a local qwen LLM) for de-identifying therapy transcripts, "
       "and quantify which layer earns its compute — especially which PII types *require* "
@@ -251,6 +253,15 @@ def main():
           "These are the adjudication queue for a v2 gold. See `IAA-RESULTS.md`. This is the "
           "fix for the circular, pattern-derived gold — though full corpus double-annotation "
           "remains future work.")
+        A("")
+        A("**Adjudication applied (v2 gold).** The high-confidence blind spots were folded "
+          "into the gold (`adjudicated: true`): spelled-out phone/policy read at the card "
+          "check, the Latin frontmatter name, quasi-professions (тимлид/бэкенд/младший "
+          "специалист), and the employer city. Relative dates (\"в прошлый четверг\") were "
+          "explicitly **scoped out** (fuzzy quasi-temporal, often clinical content). This "
+          "*lowered* RU default recall **0.93 → 0.86** — not a regression but a more complete, "
+          "harder gold: every spelled-out identifier and the transliterated name now **leak** "
+          "(no layer catches them), arguing for a spelled-digit normalizer + a Latin-NER.")
         A("")
     A("## Stricter headline check (containment)")
     A("")

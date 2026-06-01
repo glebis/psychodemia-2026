@@ -4,6 +4,8 @@
 
 ## Datasheet (Datasheets for Datasets / Data Statements for NLP)
 
+> Full datasheet + data statement: **`DATASHEET.md`**. Summary below.
+
 - **Motivation.** Compare detector layers (regex, Natasha RU-NER, the OpenAI Privacy Filter, and a local qwen LLM) for de-identifying therapy transcripts, and quantify which layer earns its compute — especially which PII types *require* an LLM to catch.
 - **Composition.** Three datasets (see per-dataset sections). The Russian set is **fully synthetic and fictional** — no real patients — hand-built from two answer-key PII inventories. The English sets are a curated synthetic slice and a real `ai4privacy/pii-masking-300k` validation slice.
 - **Languages.** Russian (`ru`), English (`en`).
@@ -26,33 +28,33 @@ _Citations: Pilán et al., *The Text Anonymization Benchmark*, Computational Lin
 
 ## RU-synth — Russian synthetic therapy series (client-a + client-b, 10 sessions)
 
-**10 documents, 171 gold PII mentions.** ★ marks the proposed default stack for this language.
+**10 documents, 189 gold PII mentions.** ★ marks the proposed default stack for this language.
 
 ### Ablation leaderboard
 
 | Combo | Cov F2 (rel) | Cov R | Type F2 | Macro-F1 | Ent-R (TAB) | Direct-R | Quasi-R | Preds |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|
-| regex | **0.100** | 0.082 | 0.100 | 0.395 | 0.378 | 0.286 | 0.435 | 14 |
-| natasha | **0.817** | 0.819 | 0.805 | 0.207 | 0.405 | 0.643 | 0.261 | 163 |
-| ollama | **0.486** | 0.439 | 0.454 | 0.407 | 0.162 | 0.214 | 0.130 | 85 |
-| natasha+regex | **0.884** | 0.901 | 0.873 | 0.602 | 0.784 | 0.929 | 0.696 | 177 |
-| natasha+ollama | **0.844** | 0.865 | 0.827 | 0.491 | 0.541 | 0.857 | 0.348 | 182 |
-| regex+ollama | **0.550** | 0.503 | 0.524 | 0.669 | 0.459 | 0.286 | 0.565 | 96 |
-| natasha+regex+ollama ★ | **0.896** | 0.930 | 0.885 | 0.753 | 0.838 | 0.929 | 0.783 | 193 |
-| opf+natasha+regex+ollama | **0.892** | 0.959 | 0.870 | 0.595 | 0.865 | 1.000 | 0.783 | 224 |
+| regex | **0.091** | 0.074 | 0.091 | 0.329 | 0.326 | 0.235 | 0.385 | 14 |
+| natasha | **0.759** | 0.746 | 0.748 | 0.209 | 0.349 | 0.529 | 0.231 | 163 |
+| ollama | **0.457** | 0.407 | 0.415 | 0.356 | 0.140 | 0.176 | 0.115 | 85 |
+| natasha+regex | **0.822** | 0.820 | 0.811 | 0.537 | 0.674 | 0.765 | 0.615 | 177 |
+| natasha+ollama | **0.796** | 0.799 | 0.770 | 0.436 | 0.465 | 0.706 | 0.308 | 182 |
+| regex+ollama | **0.515** | 0.466 | 0.480 | 0.567 | 0.395 | 0.235 | 0.500 | 96 |
+| natasha+regex+ollama ★ | **0.845** | 0.857 | 0.824 | 0.648 | 0.721 | 0.765 | 0.692 | 193 |
+| opf+natasha+regex+ollama | **0.882** | 0.926 | 0.832 | 0.535 | 0.791 | 0.941 | 0.692 | 224 |
 
 ### Per-category recall (relaxed, type-agnostic) — *which layer catches what*
 
 | Combo | AGE | DATE | EMAIL | ID | LOCATION | MEDICATION | MODALITY | ORG | PERSON | PHONE | PROFESSION |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
-| regex | 0.00 | 0.91 | 1.00 | 1.00 | 0.00 | 0.00 | — | 0.00 | 0.00 | 1.00 | 0.00 |
-| natasha | 0.00 | 0.00 | 0.00 | 0.00 | 1.00 | 0.00 | — | 1.00 | 0.96 | 0.00 | 0.00 |
-| ollama | 0.50 | 0.00 | 1.00 | 0.00 | 0.43 | 0.25 | — | 0.17 | 0.48 | 1.00 | 0.67 |
-| natasha+regex | 0.00 | 0.91 | 1.00 | 1.00 | 1.00 | 0.00 | — | 1.00 | 0.96 | 1.00 | 0.00 |
-| natasha+ollama | 0.50 | 0.00 | 1.00 | 0.00 | 1.00 | 0.25 | — | 1.00 | 0.96 | 1.00 | 0.67 |
-| regex+ollama | 0.50 | 0.91 | 1.00 | 1.00 | 0.43 | 0.25 | — | 0.17 | 0.48 | 1.00 | 0.67 |
-| natasha+regex+ollama ★ | 0.50 | 0.91 | 1.00 | 1.00 | 1.00 | 0.25 | — | 1.00 | 0.96 | 1.00 | 0.67 |
-| opf+natasha+regex+ollama | 0.50 | 0.91 | 1.00 | 1.00 | 1.00 | 0.25 | — | 1.00 | 1.00 | 1.00 | 0.67 |
+| regex | 0.00 | 0.91 | 1.00 | 0.50 | 0.00 | 0.00 | — | 0.00 | 0.00 | 0.50 | 0.00 |
+| natasha | 0.00 | 0.00 | 0.00 | 0.00 | 0.89 | 0.00 | — | 1.00 | 0.93 | 0.00 | 0.00 |
+| ollama | 0.50 | 0.00 | 1.00 | 0.00 | 0.33 | 0.25 | — | 0.17 | 0.46 | 0.50 | 0.33 |
+| natasha+regex | 0.00 | 0.91 | 1.00 | 0.50 | 0.89 | 0.00 | — | 1.00 | 0.93 | 0.50 | 0.00 |
+| natasha+ollama | 0.50 | 0.00 | 1.00 | 0.00 | 0.89 | 0.25 | — | 1.00 | 0.93 | 0.50 | 0.33 |
+| regex+ollama | 0.50 | 0.91 | 1.00 | 0.50 | 0.33 | 0.25 | — | 0.17 | 0.46 | 0.50 | 0.33 |
+| natasha+regex+ollama ★ | 0.50 | 0.91 | 1.00 | 0.50 | 0.89 | 0.25 | — | 1.00 | 0.93 | 0.50 | 0.33 |
+| opf+natasha+regex+ollama | 0.50 | 0.91 | 1.00 | 1.00 | 0.89 | 0.25 | — | 1.00 | 1.00 | 0.50 | 0.50 |
 
 ## EN-synth — English curated therapy-style snippets
 
@@ -144,10 +146,10 @@ Under the default RU stack (`natasha+regex+ollama`), direct identifiers are well
 
 | Client | Quasi survival rate | Surviving types |
 |---|--:|---|
-| a | **20%** | MEDICATION, PROFESSION |
-| b | **31%** | AGE, DATE, MEDICATION, PROFESSION |
+| a | **27%** | MEDICATION, PROFESSION |
+| b | **33%** | AGE, DATE, LOCATION, MEDICATION, PROFESSION |
 
-A local qwen **inference attack** on the *redacted* text still reconstructs identity-narrowing attributes from context; a frontier model would recover more (SOTA tools prevent re-identification only ~27–29% of the time, Staab et al.). Over-redaction (utility cost) under the default stack: **27%** of redacted spans were not PII. Full detail: `reconstruction-RESULTS.md`.
+A local qwen **inference attack** on the *redacted* text still reconstructs identity-narrowing attributes from context; a frontier model would recover more (SOTA tools prevent re-identification only ~27–29% of the time, Staab et al.). Over-redaction (utility cost) under the default stack: **20%** of redacted spans were not PII. Full detail: `reconstruction-RESULTS.md`.
 
 ## Key finding — OPF is NOT weak on Russian
 
@@ -161,21 +163,23 @@ The README's prior assumption ("OPF is English-first and weak on Russian") is **
 
 | Client | top-1 | top-3 | of N | residual risk | CBT-signal preserved |
 |---|--:|--:|--:|---|--:|
-| a | 0 | 0 | 5 | **LOW** | 100% |
-| b | 0 | 0 | 5 | **MEDIUM** | 82% |
+| a | 0 | 0 | 5 | **MEDIUM** | 100% |
+| b | 1 | 1 | 5 | **MEDIUM** | 82% |
 
 **Quasi-identifier combination (k-anonymity-style):** direct identifiers can be fully masked yet a person singled out by surviving quasi-identifiers *together*. Using declared, illustrative RU population fractions (method demo, not census):
 
 | Client | surviving quasi | expected matches | singles out? |
 |---|---|--:|---|
 | a | MEDICATION, PROFESSION | 3504.0 | no (k>1) |
-| b | AGE, DATE, MEDICATION | 8342.86 | no (k>1) |
+| b | AGE, DATE, LOCATION, MEDICATION, PROFESSION | 8342.86 | no (k>1) |
 
-**Downstream utility (Tau-Eval style):** the de-identified transcript still supports its clinical purpose — re-running cognitive-distortion extraction on redacted vs. original text preserves ~91% of distortion types, and **99.8%** of non-PII characters survive redaction. Privacy and utility are in tension; the default stack is tuned for recall.
+**Downstream utility (Tau-Eval style):** the de-identified transcript still supports its clinical purpose — re-running cognitive-distortion extraction on redacted vs. original text preserves ~91% of distortion types, and **100.0%** of non-PII characters survive redaction. Privacy and utility are in tension; the default stack is tuned for recall.
 
 ## Gold validation — inter-annotator agreement (IAA)
 
 The pattern-derived gold (A1) was checked against an **independent** from-scratch annotation by GPT-5/Codex (A2) on a seed set (ru-a-s01, ru-b-s01). **Entity-level F1 0.782** (P 0.642 = A2 items matching gold, R 1.000 = gold *entities* A2 also marked); **character-level Cohen's κ 0.666** (substantial). A2 independently re-found **every** gold entity (recall 1.0) and surfaced **19 blind spots** the answer-key gold structurally omits — spelled-out phone/policy digits, relative dates ("в прошлый четверг"), and quasi-professions ("тимлид"). These are the adjudication queue for a v2 gold. See `IAA-RESULTS.md`. This is the fix for the circular, pattern-derived gold — though full corpus double-annotation remains future work.
+
+**Adjudication applied (v2 gold).** The high-confidence blind spots were folded into the gold (`adjudicated: true`): spelled-out phone/policy read at the card check, the Latin frontmatter name, quasi-professions (тимлид/бэкенд/младший специалист), and the employer city. Relative dates ("в прошлый четверг") were explicitly **scoped out** (fuzzy quasi-temporal, often clinical content). This *lowered* RU default recall **0.93 → 0.86** — not a regression but a more complete, harder gold: every spelled-out identifier and the transliterated name now **leak** (no layer catches them), arguing for a spelled-digit normalizer + a Latin-NER.
 
 ## Stricter headline check (containment)
 

@@ -1,7 +1,7 @@
 {
   "dataset": "ru",
   "n_docs": 10,
-  "n_gold_mentions": 171,
+  "n_gold_mentions": 189,
   "combos": {
     "regex": {
       "members": [
@@ -9,64 +9,64 @@
       ],
       "n_pred": 14,
       "coverage_strict": {
-        "support": 171,
+        "support": 189,
         "c": 14,
         "fp": 0,
-        "fn": 157,
+        "fn": 175,
         "p": 1.0,
-        "r": 0.082,
-        "f1": 0.151,
-        "f2": 0.1,
-        "macro_f1": 0.395,
-        "macro_r": 0.391
+        "r": 0.074,
+        "f1": 0.138,
+        "f2": 0.091,
+        "macro_f1": 0.329,
+        "macro_r": 0.291
       },
       "coverage_relaxed": {
-        "support": 171,
+        "support": 189,
         "c": 14,
         "fp": 0,
-        "fn": 157,
+        "fn": 175,
         "p": 1.0,
-        "r": 0.082,
-        "f1": 0.151,
-        "f2": 0.1,
-        "macro_f1": 0.395,
-        "macro_r": 0.391
+        "r": 0.074,
+        "f1": 0.138,
+        "f2": 0.091,
+        "macro_f1": 0.329,
+        "macro_r": 0.291
       },
       "coverage_containment": {
-        "support": 171,
+        "support": 189,
         "c": 14,
         "fp": 0,
-        "fn": 157,
+        "fn": 175,
         "p": 1.0,
-        "r": 0.082,
-        "f1": 0.151,
-        "f2": 0.1,
-        "macro_f1": 0.395,
-        "macro_r": 0.391
+        "r": 0.074,
+        "f1": 0.138,
+        "f2": 0.091,
+        "macro_f1": 0.329,
+        "macro_r": 0.291
       },
       "type_strict": {
-        "support": 171,
+        "support": 189,
         "c": 14,
         "fp": 0,
-        "fn": 157,
+        "fn": 175,
         "p": 1.0,
-        "r": 0.082,
-        "f1": 0.151,
-        "f2": 0.1,
-        "macro_f1": 0.395,
-        "macro_r": 0.391
+        "r": 0.074,
+        "f1": 0.138,
+        "f2": 0.091,
+        "macro_f1": 0.329,
+        "macro_r": 0.291
       },
       "type_relaxed": {
-        "support": 171,
+        "support": 189,
         "c": 14,
         "fp": 0,
-        "fn": 157,
+        "fn": 175,
         "p": 1.0,
-        "r": 0.082,
-        "f1": 0.151,
-        "f2": 0.1,
-        "macro_f1": 0.395,
-        "macro_r": 0.391
+        "r": 0.074,
+        "f1": 0.138,
+        "f2": 0.091,
+        "macro_f1": 0.329,
+        "macro_r": 0.291
       },
       "coverage_relaxed_per_type": {
         "AGE": {
@@ -100,20 +100,20 @@
           "f2": 1.0
         },
         "ID": {
-          "support": 1,
+          "support": 2,
           "c": 1,
           "fp": 0,
-          "fn": 0,
+          "fn": 1,
           "p": 1.0,
-          "r": 1.0,
-          "f1": 1.0,
-          "f2": 1.0
+          "r": 0.5,
+          "f1": 0.667,
+          "f2": 0.556
         },
         "LOCATION": {
-          "support": 7,
+          "support": 9,
           "c": 0,
           "fp": 0,
-          "fn": 7,
+          "fn": 9,
           "p": 0.0,
           "r": 0.0,
           "f1": 0.0,
@@ -140,30 +140,30 @@
           "f2": 0.0
         },
         "PERSON": {
-          "support": 132,
+          "support": 137,
           "c": 0,
           "fp": 0,
-          "fn": 132,
+          "fn": 137,
           "p": 0.0,
           "r": 0.0,
           "f1": 0.0,
           "f2": 0.0
         },
         "PHONE": {
-          "support": 1,
+          "support": 2,
           "c": 1,
           "fp": 0,
-          "fn": 0,
+          "fn": 1,
           "p": 1.0,
-          "r": 1.0,
-          "f1": 1.0,
-          "f2": 1.0
+          "r": 0.5,
+          "f1": 0.667,
+          "f2": 0.556
         },
         "PROFESSION": {
-          "support": 3,
+          "support": 12,
           "c": 0,
           "fp": 0,
-          "fn": 3,
+          "fn": 12,
           "p": 0.0,
           "r": 0.0,
           "f1": 0.0,
@@ -172,24 +172,24 @@
       },
       "entity_level": {
         "protected": 14,
-        "total": 37,
-        "entity_recall": 0.378,
+        "total": 43,
+        "entity_recall": 0.326,
         "by_class": {
           "direct": {
             "protected": 4,
-            "total": 14,
-            "recall": 0.286
+            "total": 17,
+            "recall": 0.235
           },
           "quasi": {
             "protected": 10,
-            "total": 23,
-            "recall": 0.435
+            "total": 26,
+            "recall": 0.385
           }
         },
         "by_type": {
           "PERSON": {
             "protected": 0,
-            "total": 8,
+            "total": 9,
             "recall": 0.0
           },
           "DATE": {
@@ -197,19 +197,19 @@
             "total": 11,
             "recall": 0.909
           },
+          "ID": {
+            "protected": 1,
+            "total": 2,
+            "recall": 0.5
+          },
           "PHONE": {
             "protected": 1,
-            "total": 1,
-            "recall": 1.0
+            "total": 2,
+            "recall": 0.5
           },
           "EMAIL": {
             "protected": 2,
             "total": 2,
-            "recall": 1.0
-          },
-          "ID": {
-            "protected": 1,
-            "total": 1,
             "recall": 1.0
           },
           "MEDICATION": {
@@ -219,7 +219,7 @@
           },
           "PROFESSION": {
             "protected": 0,
-            "total": 2,
+            "total": 4,
             "recall": 0.0
           },
           "ORG": {
@@ -229,7 +229,7 @@
           },
           "LOCATION": {
             "protected": 0,
-            "total": 4,
+            "total": 5,
             "recall": 0.0
           },
           "AGE": {
@@ -246,64 +246,64 @@
       ],
       "n_pred": 163,
       "coverage_strict": {
-        "support": 171,
-        "c": 125,
-        "fp": 38,
-        "fn": 46,
-        "p": 0.767,
-        "r": 0.731,
-        "f1": 0.749,
-        "f2": 0.738,
-        "macro_f1": 0.218,
-        "macro_r": 0.285
+        "support": 189,
+        "c": 126,
+        "fp": 37,
+        "fn": 63,
+        "p": 0.773,
+        "r": 0.667,
+        "f1": 0.716,
+        "f2": 0.686,
+        "macro_f1": 0.217,
+        "macro_r": 0.271
       },
       "coverage_relaxed": {
-        "support": 171,
-        "c": 140,
-        "fp": 31,
-        "fn": 31,
-        "p": 0.81,
-        "r": 0.819,
-        "f1": 0.814,
-        "f2": 0.817,
-        "macro_f1": 0.226,
-        "macro_r": 0.296
+        "support": 189,
+        "c": 141,
+        "fp": 30,
+        "fn": 48,
+        "p": 0.816,
+        "r": 0.746,
+        "f1": 0.779,
+        "f2": 0.759,
+        "macro_f1": 0.225,
+        "macro_r": 0.282
       },
       "coverage_containment": {
-        "support": 171,
-        "c": 140,
-        "fp": 31,
-        "fn": 31,
-        "p": 0.81,
-        "r": 0.819,
-        "f1": 0.814,
-        "f2": 0.817,
-        "macro_f1": 0.226,
-        "macro_r": 0.296
+        "support": 189,
+        "c": 141,
+        "fp": 30,
+        "fn": 48,
+        "p": 0.816,
+        "r": 0.746,
+        "f1": 0.779,
+        "f2": 0.759,
+        "macro_f1": 0.225,
+        "macro_r": 0.282
       },
       "type_strict": {
-        "support": 171,
-        "c": 123,
-        "fp": 40,
-        "fn": 48,
-        "p": 0.755,
-        "r": 0.719,
-        "f1": 0.737,
-        "f2": 0.726,
-        "macro_f1": 0.199,
-        "macro_r": 0.252
+        "support": 189,
+        "c": 124,
+        "fp": 39,
+        "fn": 65,
+        "p": 0.761,
+        "r": 0.656,
+        "f1": 0.705,
+        "f2": 0.675,
+        "macro_f1": 0.201,
+        "macro_r": 0.237
       },
       "type_relaxed": {
-        "support": 171,
-        "c": 138,
-        "fp": 33,
-        "fn": 33,
-        "p": 0.798,
-        "r": 0.807,
-        "f1": 0.802,
-        "f2": 0.805,
-        "macro_f1": 0.207,
-        "macro_r": 0.263
+        "support": 189,
+        "c": 139,
+        "fp": 32,
+        "fn": 50,
+        "p": 0.804,
+        "r": 0.735,
+        "f1": 0.768,
+        "f2": 0.748,
+        "macro_f1": 0.209,
+        "macro_r": 0.248
       },
       "coverage_relaxed_per_type": {
         "AGE": {
@@ -337,24 +337,24 @@
           "f2": 0.0
         },
         "ID": {
-          "support": 1,
+          "support": 2,
           "c": 0,
           "fp": 0,
-          "fn": 1,
+          "fn": 2,
           "p": 0.0,
           "r": 0.0,
           "f1": 0.0,
           "f2": 0.0
         },
         "LOCATION": {
-          "support": 7,
-          "c": 7,
-          "fp": 5,
-          "fn": 0,
-          "p": 0.643,
-          "r": 1.0,
-          "f1": 0.783,
-          "f2": 0.9
+          "support": 9,
+          "c": 8,
+          "fp": 4,
+          "fn": 1,
+          "p": 0.714,
+          "r": 0.889,
+          "f1": 0.792,
+          "f2": 0.847
         },
         "MEDICATION": {
           "support": 4,
@@ -377,30 +377,30 @@
           "f2": 0.769
         },
         "PERSON": {
-          "support": 132,
+          "support": 137,
           "c": 127,
           "fp": 20,
-          "fn": 5,
+          "fn": 10,
           "p": 0.856,
-          "r": 0.962,
-          "f1": 0.906,
-          "f2": 0.939
+          "r": 0.927,
+          "f1": 0.89,
+          "f2": 0.912
         },
         "PHONE": {
-          "support": 1,
+          "support": 2,
           "c": 0,
           "fp": 0,
-          "fn": 1,
+          "fn": 2,
           "p": 0.0,
           "r": 0.0,
           "f1": 0.0,
           "f2": 0.0
         },
         "PROFESSION": {
-          "support": 3,
+          "support": 12,
           "c": 0,
           "fp": 0,
-          "fn": 3,
+          "fn": 12,
           "p": 0.0,
           "r": 0.0,
           "f1": 0.0,
@@ -409,44 +409,44 @@
       },
       "entity_level": {
         "protected": 15,
-        "total": 37,
-        "entity_recall": 0.405,
+        "total": 43,
+        "entity_recall": 0.349,
         "by_class": {
           "direct": {
             "protected": 9,
-            "total": 14,
-            "recall": 0.643
+            "total": 17,
+            "recall": 0.529
           },
           "quasi": {
             "protected": 6,
-            "total": 23,
-            "recall": 0.261
+            "total": 26,
+            "recall": 0.231
           }
         },
         "by_type": {
           "PERSON": {
             "protected": 7,
-            "total": 8,
-            "recall": 0.875
+            "total": 9,
+            "recall": 0.778
           },
           "DATE": {
             "protected": 0,
             "total": 11,
             "recall": 0.0
           },
+          "ID": {
+            "protected": 0,
+            "total": 2,
+            "recall": 0.0
+          },
           "PHONE": {
             "protected": 0,
-            "total": 1,
+            "total": 2,
             "recall": 0.0
           },
           "EMAIL": {
             "protected": 0,
             "total": 2,
-            "recall": 0.0
-          },
-          "ID": {
-            "protected": 0,
-            "total": 1,
             "recall": 0.0
           },
           "MEDICATION": {
@@ -456,7 +456,7 @@
           },
           "PROFESSION": {
             "protected": 0,
-            "total": 2,
+            "total": 4,
             "recall": 0.0
           },
           "ORG": {
@@ -466,8 +466,8 @@
           },
           "LOCATION": {
             "protected": 4,
-            "total": 4,
-            "recall": 1.0
+            "total": 5,
+            "recall": 0.8
           },
           "AGE": {
             "protected": 0,
@@ -483,64 +483,64 @@
       ],
       "n_pred": 85,
       "coverage_strict": {
-        "support": 171,
-        "c": 69,
-        "fp": 16,
-        "fn": 102,
-        "p": 0.812,
-        "r": 0.404,
-        "f1": 0.539,
-        "f2": 0.449,
-        "macro_f1": 0.454,
-        "macro_r": 0.396
+        "support": 189,
+        "c": 70,
+        "fp": 15,
+        "fn": 119,
+        "p": 0.824,
+        "r": 0.37,
+        "f1": 0.511,
+        "f2": 0.416,
+        "macro_f1": 0.375,
+        "macro_r": 0.293
       },
       "coverage_relaxed": {
-        "support": 171,
-        "c": 75,
-        "fp": 12,
-        "fn": 96,
-        "p": 0.859,
-        "r": 0.439,
-        "f1": 0.581,
-        "f2": 0.486,
-        "macro_f1": 0.509,
-        "macro_r": 0.449
+        "support": 189,
+        "c": 77,
+        "fp": 10,
+        "fn": 112,
+        "p": 0.882,
+        "r": 0.407,
+        "f1": 0.557,
+        "f2": 0.457,
+        "macro_f1": 0.452,
+        "macro_r": 0.354
       },
       "coverage_containment": {
-        "support": 171,
-        "c": 75,
-        "fp": 12,
-        "fn": 96,
-        "p": 0.859,
-        "r": 0.439,
-        "f1": 0.581,
-        "f2": 0.486,
-        "macro_f1": 0.509,
-        "macro_r": 0.449
+        "support": 189,
+        "c": 77,
+        "fp": 10,
+        "fn": 112,
+        "p": 0.882,
+        "r": 0.407,
+        "f1": 0.557,
+        "f2": 0.457,
+        "macro_f1": 0.452,
+        "macro_r": 0.354
       },
       "type_strict": {
-        "support": 171,
+        "support": 189,
         "c": 64,
         "fp": 21,
-        "fn": 107,
+        "fn": 125,
         "p": 0.753,
-        "r": 0.374,
-        "f1": 0.5,
-        "f2": 0.416,
-        "macro_f1": 0.352,
-        "macro_r": 0.343
+        "r": 0.339,
+        "f1": 0.467,
+        "f2": 0.38,
+        "macro_f1": 0.301,
+        "macro_r": 0.232
       },
       "type_relaxed": {
-        "support": 171,
+        "support": 189,
         "c": 70,
         "fp": 17,
-        "fn": 101,
+        "fn": 119,
         "p": 0.8,
-        "r": 0.409,
-        "f1": 0.542,
-        "f2": 0.454,
-        "macro_f1": 0.407,
-        "macro_r": 0.396
+        "r": 0.37,
+        "f1": 0.506,
+        "f2": 0.415,
+        "macro_f1": 0.356,
+        "macro_r": 0.285
       },
       "coverage_relaxed_per_type": {
         "AGE": {
@@ -574,34 +574,34 @@
           "f2": 1.0
         },
         "ID": {
-          "support": 1,
+          "support": 2,
           "c": 0,
           "fp": 0,
-          "fn": 1,
+          "fn": 2,
           "p": 0.0,
           "r": 0.0,
           "f1": 0.0,
           "f2": 0.0
         },
         "LOCATION": {
-          "support": 7,
+          "support": 9,
           "c": 3,
           "fp": 0,
-          "fn": 4,
+          "fn": 6,
           "p": 1.0,
-          "r": 0.429,
-          "f1": 0.6,
-          "f2": 0.484
+          "r": 0.333,
+          "f1": 0.5,
+          "f2": 0.385
         },
         "MEDICATION": {
           "support": 4,
           "c": 1,
-          "fp": 6,
+          "fp": 4,
           "fn": 3,
-          "p": 0.143,
+          "p": 0.429,
           "r": 0.25,
-          "f1": 0.182,
-          "f2": 0.217
+          "f1": 0.316,
+          "f2": 0.273
         },
         "MODALITY": {
           "support": 0,
@@ -624,56 +624,56 @@
           "f2": 0.2
         },
         "PERSON": {
-          "support": 132,
+          "support": 137,
           "c": 63,
           "fp": 4,
-          "fn": 69,
+          "fn": 74,
           "p": 0.934,
-          "r": 0.477,
-          "f1": 0.632,
-          "f2": 0.529
+          "r": 0.46,
+          "f1": 0.616,
+          "f2": 0.512
         },
         "PHONE": {
-          "support": 1,
+          "support": 2,
           "c": 1,
           "fp": 0,
-          "fn": 0,
+          "fn": 1,
           "p": 1.0,
-          "r": 1.0,
-          "f1": 1.0,
-          "f2": 1.0
+          "r": 0.5,
+          "f1": 0.667,
+          "f2": 0.556
         },
         "PROFESSION": {
-          "support": 3,
-          "c": 2,
+          "support": 12,
+          "c": 4,
           "fp": 1,
-          "fn": 1,
+          "fn": 8,
           "p": 0.8,
-          "r": 0.667,
-          "f1": 0.727,
-          "f2": 0.69
+          "r": 0.333,
+          "f1": 0.471,
+          "f2": 0.377
         }
       },
       "entity_level": {
         "protected": 6,
-        "total": 37,
-        "entity_recall": 0.162,
+        "total": 43,
+        "entity_recall": 0.14,
         "by_class": {
           "direct": {
             "protected": 3,
-            "total": 14,
-            "recall": 0.214
+            "total": 17,
+            "recall": 0.176
           },
           "quasi": {
             "protected": 3,
-            "total": 23,
-            "recall": 0.13
+            "total": 26,
+            "recall": 0.115
           }
         },
         "by_type": {
           "PERSON": {
             "protected": 0,
-            "total": 8,
+            "total": 9,
             "recall": 0.0
           },
           "DATE": {
@@ -681,20 +681,20 @@
             "total": 11,
             "recall": 0.0
           },
+          "ID": {
+            "protected": 0,
+            "total": 2,
+            "recall": 0.0
+          },
           "PHONE": {
             "protected": 1,
-            "total": 1,
-            "recall": 1.0
+            "total": 2,
+            "recall": 0.5
           },
           "EMAIL": {
             "protected": 2,
             "total": 2,
             "recall": 1.0
-          },
-          "ID": {
-            "protected": 0,
-            "total": 1,
-            "recall": 0.0
           },
           "MEDICATION": {
             "protected": 0,
@@ -703,8 +703,8 @@
           },
           "PROFESSION": {
             "protected": 1,
-            "total": 2,
-            "recall": 0.5
+            "total": 4,
+            "recall": 0.25
           },
           "ORG": {
             "protected": 1,
@@ -713,7 +713,7 @@
           },
           "LOCATION": {
             "protected": 0,
-            "total": 4,
+            "total": 5,
             "recall": 0.0
           },
           "AGE": {
@@ -731,64 +731,64 @@
       ],
       "n_pred": 177,
       "coverage_strict": {
-        "support": 171,
-        "c": 139,
-        "fp": 38,
-        "fn": 32,
-        "p": 0.785,
-        "r": 0.813,
-        "f1": 0.799,
-        "f2": 0.807,
-        "macro_f1": 0.613,
-        "macro_r": 0.676
+        "support": 189,
+        "c": 140,
+        "fp": 37,
+        "fn": 49,
+        "p": 0.791,
+        "r": 0.741,
+        "f1": 0.765,
+        "f2": 0.75,
+        "macro_f1": 0.546,
+        "macro_r": 0.562
       },
       "coverage_relaxed": {
-        "support": 171,
-        "c": 154,
-        "fp": 31,
-        "fn": 17,
-        "p": 0.825,
-        "r": 0.901,
-        "f1": 0.861,
-        "f2": 0.884,
-        "macro_f1": 0.621,
-        "macro_r": 0.687
+        "support": 189,
+        "c": 155,
+        "fp": 30,
+        "fn": 34,
+        "p": 0.831,
+        "r": 0.82,
+        "f1": 0.825,
+        "f2": 0.822,
+        "macro_f1": 0.554,
+        "macro_r": 0.573
       },
       "coverage_containment": {
-        "support": 171,
-        "c": 154,
-        "fp": 31,
-        "fn": 17,
-        "p": 0.825,
-        "r": 0.901,
-        "f1": 0.861,
-        "f2": 0.884,
-        "macro_f1": 0.621,
-        "macro_r": 0.687
+        "support": 189,
+        "c": 155,
+        "fp": 30,
+        "fn": 34,
+        "p": 0.831,
+        "r": 0.82,
+        "f1": 0.825,
+        "f2": 0.822,
+        "macro_f1": 0.554,
+        "macro_r": 0.573
       },
       "type_strict": {
-        "support": 171,
-        "c": 137,
-        "fp": 40,
-        "fn": 34,
-        "p": 0.774,
-        "r": 0.801,
-        "f1": 0.787,
-        "f2": 0.796,
-        "macro_f1": 0.595,
-        "macro_r": 0.642
+        "support": 189,
+        "c": 138,
+        "fp": 39,
+        "fn": 51,
+        "p": 0.78,
+        "r": 0.73,
+        "f1": 0.754,
+        "f2": 0.74,
+        "macro_f1": 0.529,
+        "macro_r": 0.528
       },
       "type_relaxed": {
-        "support": 171,
-        "c": 152,
-        "fp": 33,
-        "fn": 19,
-        "p": 0.814,
-        "r": 0.889,
-        "f1": 0.85,
-        "f2": 0.873,
-        "macro_f1": 0.602,
-        "macro_r": 0.654
+        "support": 189,
+        "c": 153,
+        "fp": 32,
+        "fn": 36,
+        "p": 0.819,
+        "r": 0.81,
+        "f1": 0.814,
+        "f2": 0.811,
+        "macro_f1": 0.537,
+        "macro_r": 0.539
       },
       "coverage_relaxed_per_type": {
         "AGE": {
@@ -822,24 +822,24 @@
           "f2": 1.0
         },
         "ID": {
-          "support": 1,
+          "support": 2,
           "c": 1,
           "fp": 0,
-          "fn": 0,
+          "fn": 1,
           "p": 1.0,
-          "r": 1.0,
-          "f1": 1.0,
-          "f2": 1.0
+          "r": 0.5,
+          "f1": 0.667,
+          "f2": 0.556
         },
         "LOCATION": {
-          "support": 7,
-          "c": 7,
-          "fp": 5,
-          "fn": 0,
-          "p": 0.643,
-          "r": 1.0,
-          "f1": 0.783,
-          "f2": 0.9
+          "support": 9,
+          "c": 8,
+          "fp": 4,
+          "fn": 1,
+          "p": 0.714,
+          "r": 0.889,
+          "f1": 0.792,
+          "f2": 0.847
         },
         "MEDICATION": {
           "support": 4,
@@ -862,30 +862,30 @@
           "f2": 0.769
         },
         "PERSON": {
-          "support": 132,
+          "support": 137,
           "c": 127,
           "fp": 20,
-          "fn": 5,
+          "fn": 10,
           "p": 0.856,
-          "r": 0.962,
-          "f1": 0.906,
-          "f2": 0.939
+          "r": 0.927,
+          "f1": 0.89,
+          "f2": 0.912
         },
         "PHONE": {
-          "support": 1,
+          "support": 2,
           "c": 1,
           "fp": 0,
-          "fn": 0,
+          "fn": 1,
           "p": 1.0,
-          "r": 1.0,
-          "f1": 1.0,
-          "f2": 1.0
+          "r": 0.5,
+          "f1": 0.667,
+          "f2": 0.556
         },
         "PROFESSION": {
-          "support": 3,
+          "support": 12,
           "c": 0,
           "fp": 0,
-          "fn": 3,
+          "fn": 12,
           "p": 0.0,
           "r": 0.0,
           "f1": 0.0,
@@ -894,44 +894,44 @@
       },
       "entity_level": {
         "protected": 29,
-        "total": 37,
-        "entity_recall": 0.784,
+        "total": 43,
+        "entity_recall": 0.674,
         "by_class": {
           "direct": {
             "protected": 13,
-            "total": 14,
-            "recall": 0.929
+            "total": 17,
+            "recall": 0.765
           },
           "quasi": {
             "protected": 16,
-            "total": 23,
-            "recall": 0.696
+            "total": 26,
+            "recall": 0.615
           }
         },
         "by_type": {
           "PERSON": {
             "protected": 7,
-            "total": 8,
-            "recall": 0.875
+            "total": 9,
+            "recall": 0.778
           },
           "DATE": {
             "protected": 10,
             "total": 11,
             "recall": 0.909
           },
+          "ID": {
+            "protected": 1,
+            "total": 2,
+            "recall": 0.5
+          },
           "PHONE": {
             "protected": 1,
-            "total": 1,
-            "recall": 1.0
+            "total": 2,
+            "recall": 0.5
           },
           "EMAIL": {
             "protected": 2,
             "total": 2,
-            "recall": 1.0
-          },
-          "ID": {
-            "protected": 1,
-            "total": 1,
             "recall": 1.0
           },
           "MEDICATION": {
@@ -941,7 +941,7 @@
           },
           "PROFESSION": {
             "protected": 0,
-            "total": 2,
+            "total": 4,
             "recall": 0.0
           },
           "ORG": {
@@ -951,8 +951,8 @@
           },
           "LOCATION": {
             "protected": 4,
-            "total": 4,
-            "recall": 1.0
+            "total": 5,
+            "recall": 0.8
           },
           "AGE": {
             "protected": 0,
@@ -969,64 +969,64 @@
       ],
       "n_pred": 182,
       "coverage_strict": {
-        "support": 171,
-        "c": 131,
-        "fp": 51,
-        "fn": 40,
-        "p": 0.72,
-        "r": 0.766,
-        "f1": 0.742,
-        "f2": 0.756,
-        "macro_f1": 0.517,
-        "macro_r": 0.577
+        "support": 189,
+        "c": 133,
+        "fp": 49,
+        "fn": 56,
+        "p": 0.731,
+        "r": 0.704,
+        "f1": 0.717,
+        "f2": 0.709,
+        "macro_f1": 0.453,
+        "macro_r": 0.471
       },
       "coverage_relaxed": {
-        "support": 171,
-        "c": 148,
-        "fp": 42,
-        "fn": 23,
-        "p": 0.769,
-        "r": 0.865,
-        "f1": 0.815,
-        "f2": 0.844,
-        "macro_f1": 0.577,
-        "macro_r": 0.638
+        "support": 189,
+        "c": 151,
+        "fp": 39,
+        "fn": 38,
+        "p": 0.786,
+        "r": 0.799,
+        "f1": 0.792,
+        "f2": 0.796,
+        "macro_f1": 0.534,
+        "macro_r": 0.54
       },
       "coverage_containment": {
-        "support": 171,
-        "c": 148,
-        "fp": 42,
-        "fn": 23,
-        "p": 0.769,
-        "r": 0.865,
-        "f1": 0.815,
-        "f2": 0.844,
-        "macro_f1": 0.577,
-        "macro_r": 0.638
+        "support": 189,
+        "c": 151,
+        "fp": 39,
+        "fn": 38,
+        "p": 0.786,
+        "r": 0.799,
+        "f1": 0.792,
+        "f2": 0.796,
+        "macro_f1": 0.534,
+        "macro_r": 0.54
       },
       "type_strict": {
-        "support": 171,
-        "c": 128,
-        "fp": 54,
-        "fn": 43,
-        "p": 0.703,
-        "r": 0.749,
-        "f1": 0.725,
-        "f2": 0.739,
-        "macro_f1": 0.432,
-        "macro_r": 0.493
+        "support": 189,
+        "c": 129,
+        "fp": 53,
+        "fn": 60,
+        "p": 0.709,
+        "r": 0.683,
+        "f1": 0.695,
+        "f2": 0.688,
+        "macro_f1": 0.377,
+        "macro_r": 0.379
       },
       "type_relaxed": {
-        "support": 171,
-        "c": 145,
-        "fp": 45,
-        "fn": 26,
-        "p": 0.753,
-        "r": 0.848,
-        "f1": 0.798,
-        "f2": 0.827,
-        "macro_f1": 0.491,
-        "macro_r": 0.555
+        "support": 189,
+        "c": 146,
+        "fp": 44,
+        "fn": 43,
+        "p": 0.758,
+        "r": 0.772,
+        "f1": 0.765,
+        "f2": 0.77,
+        "macro_f1": 0.436,
+        "macro_r": 0.44
       },
       "coverage_relaxed_per_type": {
         "AGE": {
@@ -1060,34 +1060,34 @@
           "f2": 1.0
         },
         "ID": {
-          "support": 1,
+          "support": 2,
           "c": 0,
           "fp": 0,
-          "fn": 1,
+          "fn": 2,
           "p": 0.0,
           "r": 0.0,
           "f1": 0.0,
           "f2": 0.0
         },
         "LOCATION": {
-          "support": 7,
-          "c": 7,
-          "fp": 5,
-          "fn": 0,
-          "p": 0.643,
-          "r": 1.0,
-          "f1": 0.783,
-          "f2": 0.9
+          "support": 9,
+          "c": 8,
+          "fp": 4,
+          "fn": 1,
+          "p": 0.714,
+          "r": 0.889,
+          "f1": 0.792,
+          "f2": 0.847
         },
         "MEDICATION": {
           "support": 4,
           "c": 1,
-          "fp": 6,
+          "fp": 4,
           "fn": 3,
-          "p": 0.143,
+          "p": 0.429,
           "r": 0.25,
-          "f1": 0.182,
-          "f2": 0.217
+          "f1": 0.316,
+          "f2": 0.273
         },
         "MODALITY": {
           "support": 0,
@@ -1110,77 +1110,77 @@
           "f2": 0.769
         },
         "PERSON": {
-          "support": 132,
+          "support": 137,
           "c": 127,
           "fp": 23,
-          "fn": 5,
+          "fn": 10,
           "p": 0.838,
-          "r": 0.962,
-          "f1": 0.896,
-          "f2": 0.934
+          "r": 0.927,
+          "f1": 0.88,
+          "f2": 0.908
         },
         "PHONE": {
-          "support": 1,
+          "support": 2,
           "c": 1,
           "fp": 0,
-          "fn": 0,
+          "fn": 1,
           "p": 1.0,
-          "r": 1.0,
-          "f1": 1.0,
-          "f2": 1.0
+          "r": 0.5,
+          "f1": 0.667,
+          "f2": 0.556
         },
         "PROFESSION": {
-          "support": 3,
-          "c": 2,
+          "support": 12,
+          "c": 4,
           "fp": 1,
-          "fn": 1,
+          "fn": 8,
           "p": 0.667,
-          "r": 0.667,
-          "f1": 0.667,
-          "f2": 0.667
+          "r": 0.333,
+          "f1": 0.444,
+          "f2": 0.37
         }
       },
       "entity_level": {
         "protected": 20,
-        "total": 37,
-        "entity_recall": 0.541,
+        "total": 43,
+        "entity_recall": 0.465,
         "by_class": {
           "direct": {
             "protected": 12,
-            "total": 14,
-            "recall": 0.857
+            "total": 17,
+            "recall": 0.706
           },
           "quasi": {
             "protected": 8,
-            "total": 23,
-            "recall": 0.348
+            "total": 26,
+            "recall": 0.308
           }
         },
         "by_type": {
           "PERSON": {
             "protected": 7,
-            "total": 8,
-            "recall": 0.875
+            "total": 9,
+            "recall": 0.778
           },
           "DATE": {
             "protected": 0,
             "total": 11,
             "recall": 0.0
           },
+          "ID": {
+            "protected": 0,
+            "total": 2,
+            "recall": 0.0
+          },
           "PHONE": {
             "protected": 1,
-            "total": 1,
-            "recall": 1.0
+            "total": 2,
+            "recall": 0.5
           },
           "EMAIL": {
             "protected": 2,
             "total": 2,
             "recall": 1.0
-          },
-          "ID": {
-            "protected": 0,
-            "total": 1,
-            "recall": 0.0
           },
           "MEDICATION": {
             "protected": 0,
@@ -1189,8 +1189,8 @@
           },
           "PROFESSION": {
             "protected": 1,
-            "total": 2,
-            "recall": 0.5
+            "total": 4,
+            "recall": 0.25
           },
           "ORG": {
             "protected": 4,
@@ -1199,8 +1199,8 @@
           },
           "LOCATION": {
             "protected": 4,
-            "total": 4,
-            "recall": 1.0
+            "total": 5,
+            "recall": 0.8
           },
           "AGE": {
             "protected": 1,
@@ -1217,64 +1217,64 @@
       ],
       "n_pred": 96,
       "coverage_strict": {
-        "support": 171,
-        "c": 80,
-        "fp": 16,
-        "fn": 91,
-        "p": 0.833,
-        "r": 0.468,
-        "f1": 0.599,
-        "f2": 0.513,
-        "macro_f1": 0.65,
-        "macro_r": 0.587
+        "support": 189,
+        "c": 81,
+        "fp": 15,
+        "fn": 108,
+        "p": 0.844,
+        "r": 0.429,
+        "f1": 0.568,
+        "f2": 0.475,
+        "macro_f1": 0.537,
+        "macro_r": 0.434
       },
       "coverage_relaxed": {
-        "support": 171,
-        "c": 86,
-        "fp": 12,
-        "fn": 85,
-        "p": 0.875,
-        "r": 0.503,
-        "f1": 0.639,
-        "f2": 0.55,
-        "macro_f1": 0.705,
-        "macro_r": 0.64
+        "support": 189,
+        "c": 88,
+        "fp": 10,
+        "fn": 101,
+        "p": 0.896,
+        "r": 0.466,
+        "f1": 0.613,
+        "f2": 0.515,
+        "macro_f1": 0.614,
+        "macro_r": 0.495
       },
       "coverage_containment": {
-        "support": 171,
-        "c": 86,
-        "fp": 12,
-        "fn": 85,
-        "p": 0.875,
-        "r": 0.503,
-        "f1": 0.639,
-        "f2": 0.55,
-        "macro_f1": 0.705,
-        "macro_r": 0.64
+        "support": 189,
+        "c": 88,
+        "fp": 10,
+        "fn": 101,
+        "p": 0.896,
+        "r": 0.466,
+        "f1": 0.613,
+        "f2": 0.515,
+        "macro_f1": 0.614,
+        "macro_r": 0.495
       },
       "type_strict": {
-        "support": 171,
+        "support": 189,
         "c": 76,
         "fp": 20,
-        "fn": 95,
+        "fn": 113,
         "p": 0.792,
-        "r": 0.444,
-        "f1": 0.569,
-        "f2": 0.487,
-        "macro_f1": 0.614,
-        "macro_r": 0.584
+        "r": 0.402,
+        "f1": 0.533,
+        "f2": 0.446,
+        "macro_f1": 0.512,
+        "macro_r": 0.423
       },
       "type_relaxed": {
-        "support": 171,
+        "support": 189,
         "c": 82,
         "fp": 16,
-        "fn": 89,
+        "fn": 107,
         "p": 0.833,
-        "r": 0.48,
-        "f1": 0.609,
-        "f2": 0.524,
-        "macro_f1": 0.669,
-        "macro_r": 0.637
+        "r": 0.434,
+        "f1": 0.571,
+        "f2": 0.48,
+        "macro_f1": 0.567,
+        "macro_r": 0.476
       },
       "coverage_relaxed_per_type": {
         "AGE": {
@@ -1308,34 +1308,34 @@
           "f2": 1.0
         },
         "ID": {
-          "support": 1,
+          "support": 2,
           "c": 1,
           "fp": 0,
-          "fn": 0,
+          "fn": 1,
           "p": 1.0,
-          "r": 1.0,
-          "f1": 1.0,
-          "f2": 1.0
+          "r": 0.5,
+          "f1": 0.667,
+          "f2": 0.556
         },
         "LOCATION": {
-          "support": 7,
+          "support": 9,
           "c": 3,
           "fp": 0,
-          "fn": 4,
+          "fn": 6,
           "p": 1.0,
-          "r": 0.429,
-          "f1": 0.6,
-          "f2": 0.484
+          "r": 0.333,
+          "f1": 0.5,
+          "f2": 0.385
         },
         "MEDICATION": {
           "support": 4,
           "c": 1,
-          "fp": 6,
+          "fp": 4,
           "fn": 3,
-          "p": 0.143,
+          "p": 0.429,
           "r": 0.25,
-          "f1": 0.182,
-          "f2": 0.217
+          "f1": 0.316,
+          "f2": 0.273
         },
         "MODALITY": {
           "support": 0,
@@ -1358,56 +1358,56 @@
           "f2": 0.2
         },
         "PERSON": {
-          "support": 132,
+          "support": 137,
           "c": 63,
           "fp": 4,
-          "fn": 69,
+          "fn": 74,
           "p": 0.934,
-          "r": 0.477,
-          "f1": 0.632,
-          "f2": 0.529
+          "r": 0.46,
+          "f1": 0.616,
+          "f2": 0.512
         },
         "PHONE": {
-          "support": 1,
+          "support": 2,
           "c": 1,
           "fp": 0,
-          "fn": 0,
+          "fn": 1,
           "p": 1.0,
-          "r": 1.0,
-          "f1": 1.0,
-          "f2": 1.0
+          "r": 0.5,
+          "f1": 0.667,
+          "f2": 0.556
         },
         "PROFESSION": {
-          "support": 3,
-          "c": 2,
+          "support": 12,
+          "c": 4,
           "fp": 1,
-          "fn": 1,
+          "fn": 8,
           "p": 0.8,
-          "r": 0.667,
-          "f1": 0.727,
-          "f2": 0.69
+          "r": 0.333,
+          "f1": 0.471,
+          "f2": 0.377
         }
       },
       "entity_level": {
         "protected": 17,
-        "total": 37,
-        "entity_recall": 0.459,
+        "total": 43,
+        "entity_recall": 0.395,
         "by_class": {
           "direct": {
             "protected": 4,
-            "total": 14,
-            "recall": 0.286
+            "total": 17,
+            "recall": 0.235
           },
           "quasi": {
             "protected": 13,
-            "total": 23,
-            "recall": 0.565
+            "total": 26,
+            "recall": 0.5
           }
         },
         "by_type": {
           "PERSON": {
             "protected": 0,
-            "total": 8,
+            "total": 9,
             "recall": 0.0
           },
           "DATE": {
@@ -1415,19 +1415,19 @@
             "total": 11,
             "recall": 0.909
           },
+          "ID": {
+            "protected": 1,
+            "total": 2,
+            "recall": 0.5
+          },
           "PHONE": {
             "protected": 1,
-            "total": 1,
-            "recall": 1.0
+            "total": 2,
+            "recall": 0.5
           },
           "EMAIL": {
             "protected": 2,
             "total": 2,
-            "recall": 1.0
-          },
-          "ID": {
-            "protected": 1,
-            "total": 1,
             "recall": 1.0
           },
           "MEDICATION": {
@@ -1437,8 +1437,8 @@
           },
           "PROFESSION": {
             "protected": 1,
-            "total": 2,
-            "recall": 0.5
+            "total": 4,
+            "recall": 0.25
           },
           "ORG": {
             "protected": 1,
@@ -1447,7 +1447,7 @@
           },
           "LOCATION": {
             "protected": 0,
-            "total": 4,
+            "total": 5,
             "recall": 0.0
           },
           "AGE": {
@@ -1466,64 +1466,64 @@
       ],
       "n_pred": 193,
       "coverage_strict": {
-        "support": 171,
-        "c": 142,
-        "fp": 51,
-        "fn": 29,
-        "p": 0.736,
-        "r": 0.83,
-        "f1": 0.78,
-        "f2": 0.81,
-        "macro_f1": 0.712,
-        "macro_r": 0.767
+        "support": 189,
+        "c": 144,
+        "fp": 49,
+        "fn": 45,
+        "p": 0.746,
+        "r": 0.762,
+        "f1": 0.754,
+        "f2": 0.759,
+        "macro_f1": 0.615,
+        "macro_r": 0.612
       },
       "coverage_relaxed": {
-        "support": 171,
-        "c": 159,
-        "fp": 42,
-        "fn": 12,
-        "p": 0.782,
-        "r": 0.93,
-        "f1": 0.85,
-        "f2": 0.896,
-        "macro_f1": 0.772,
-        "macro_r": 0.829
+        "support": 189,
+        "c": 162,
+        "fp": 39,
+        "fn": 27,
+        "p": 0.798,
+        "r": 0.857,
+        "f1": 0.826,
+        "f2": 0.845,
+        "macro_f1": 0.696,
+        "macro_r": 0.681
       },
       "coverage_containment": {
-        "support": 171,
-        "c": 159,
-        "fp": 42,
-        "fn": 12,
-        "p": 0.782,
-        "r": 0.93,
-        "f1": 0.85,
-        "f2": 0.896,
-        "macro_f1": 0.772,
-        "macro_r": 0.829
+        "support": 189,
+        "c": 162,
+        "fp": 39,
+        "fn": 27,
+        "p": 0.798,
+        "r": 0.857,
+        "f1": 0.826,
+        "f2": 0.845,
+        "macro_f1": 0.696,
+        "macro_r": 0.681
       },
       "type_strict": {
-        "support": 171,
-        "c": 140,
-        "fp": 53,
-        "fn": 31,
-        "p": 0.725,
-        "r": 0.819,
-        "f1": 0.769,
-        "f2": 0.798,
-        "macro_f1": 0.694,
-        "macro_r": 0.734
+        "support": 189,
+        "c": 141,
+        "fp": 52,
+        "fn": 48,
+        "p": 0.731,
+        "r": 0.746,
+        "f1": 0.738,
+        "f2": 0.743,
+        "macro_f1": 0.589,
+        "macro_r": 0.57
       },
       "type_relaxed": {
-        "support": 171,
-        "c": 157,
-        "fp": 44,
-        "fn": 14,
-        "p": 0.772,
-        "r": 0.918,
-        "f1": 0.839,
-        "f2": 0.885,
-        "macro_f1": 0.753,
-        "macro_r": 0.795
+        "support": 189,
+        "c": 158,
+        "fp": 43,
+        "fn": 31,
+        "p": 0.777,
+        "r": 0.836,
+        "f1": 0.806,
+        "f2": 0.824,
+        "macro_f1": 0.648,
+        "macro_r": 0.631
       },
       "coverage_relaxed_per_type": {
         "AGE": {
@@ -1557,34 +1557,34 @@
           "f2": 1.0
         },
         "ID": {
-          "support": 1,
+          "support": 2,
           "c": 1,
           "fp": 0,
-          "fn": 0,
+          "fn": 1,
           "p": 1.0,
-          "r": 1.0,
-          "f1": 1.0,
-          "f2": 1.0
+          "r": 0.5,
+          "f1": 0.667,
+          "f2": 0.556
         },
         "LOCATION": {
-          "support": 7,
-          "c": 7,
-          "fp": 5,
-          "fn": 0,
-          "p": 0.643,
-          "r": 1.0,
-          "f1": 0.783,
-          "f2": 0.9
+          "support": 9,
+          "c": 8,
+          "fp": 4,
+          "fn": 1,
+          "p": 0.714,
+          "r": 0.889,
+          "f1": 0.792,
+          "f2": 0.847
         },
         "MEDICATION": {
           "support": 4,
           "c": 1,
-          "fp": 6,
+          "fp": 4,
           "fn": 3,
-          "p": 0.143,
+          "p": 0.429,
           "r": 0.25,
-          "f1": 0.182,
-          "f2": 0.217
+          "f1": 0.316,
+          "f2": 0.273
         },
         "MODALITY": {
           "support": 0,
@@ -1607,76 +1607,76 @@
           "f2": 0.769
         },
         "PERSON": {
-          "support": 132,
+          "support": 137,
           "c": 127,
           "fp": 23,
-          "fn": 5,
+          "fn": 10,
           "p": 0.838,
-          "r": 0.962,
-          "f1": 0.896,
-          "f2": 0.934
+          "r": 0.927,
+          "f1": 0.88,
+          "f2": 0.908
         },
         "PHONE": {
-          "support": 1,
+          "support": 2,
           "c": 1,
           "fp": 0,
-          "fn": 0,
+          "fn": 1,
           "p": 1.0,
-          "r": 1.0,
-          "f1": 1.0,
-          "f2": 1.0
+          "r": 0.5,
+          "f1": 0.667,
+          "f2": 0.556
         },
         "PROFESSION": {
-          "support": 3,
-          "c": 2,
+          "support": 12,
+          "c": 4,
           "fp": 1,
-          "fn": 1,
+          "fn": 8,
           "p": 0.667,
-          "r": 0.667,
-          "f1": 0.667,
-          "f2": 0.667
+          "r": 0.333,
+          "f1": 0.444,
+          "f2": 0.37
         }
       },
       "entity_level": {
         "protected": 31,
-        "total": 37,
-        "entity_recall": 0.838,
+        "total": 43,
+        "entity_recall": 0.721,
         "by_class": {
           "direct": {
             "protected": 13,
-            "total": 14,
-            "recall": 0.929
+            "total": 17,
+            "recall": 0.765
           },
           "quasi": {
             "protected": 18,
-            "total": 23,
-            "recall": 0.783
+            "total": 26,
+            "recall": 0.692
           }
         },
         "by_type": {
           "PERSON": {
             "protected": 7,
-            "total": 8,
-            "recall": 0.875
+            "total": 9,
+            "recall": 0.778
           },
           "DATE": {
             "protected": 10,
             "total": 11,
             "recall": 0.909
           },
+          "ID": {
+            "protected": 1,
+            "total": 2,
+            "recall": 0.5
+          },
           "PHONE": {
             "protected": 1,
-            "total": 1,
-            "recall": 1.0
+            "total": 2,
+            "recall": 0.5
           },
           "EMAIL": {
             "protected": 2,
             "total": 2,
-            "recall": 1.0
-          },
-          "ID": {
-            "protected": 1,
-            "total": 1,
             "recall": 1.0
           },
           "MEDICATION": {
@@ -1686,8 +1686,8 @@
           },
           "PROFESSION": {
             "protected": 1,
-            "total": 2,
-            "recall": 0.5
+            "total": 4,
+            "recall": 0.25
           },
           "ORG": {
             "protected": 4,
@@ -1696,8 +1696,8 @@
           },
           "LOCATION": {
             "protected": 4,
-            "total": 4,
-            "recall": 1.0
+            "total": 5,
+            "recall": 0.8
           },
           "AGE": {
             "protected": 1,
@@ -1716,64 +1716,64 @@
       ],
       "n_pred": 224,
       "coverage_strict": {
-        "support": 171,
-        "c": 138,
-        "fp": 86,
-        "fn": 33,
-        "p": 0.616,
-        "r": 0.807,
-        "f1": 0.699,
-        "f2": 0.76,
-        "macro_f1": 0.586,
-        "macro_r": 0.764
+        "support": 189,
+        "c": 144,
+        "fp": 80,
+        "fn": 45,
+        "p": 0.643,
+        "r": 0.762,
+        "f1": 0.697,
+        "f2": 0.735,
+        "macro_f1": 0.511,
+        "macro_r": 0.604
       },
       "coverage_relaxed": {
-        "support": 171,
-        "c": 164,
-        "fp": 68,
-        "fn": 7,
-        "p": 0.696,
-        "r": 0.959,
-        "f1": 0.807,
-        "f2": 0.892,
-        "macro_f1": 0.652,
-        "macro_r": 0.833
+        "support": 189,
+        "c": 175,
+        "fp": 58,
+        "fn": 14,
+        "p": 0.741,
+        "r": 0.926,
+        "f1": 0.823,
+        "f2": 0.882,
+        "macro_f1": 0.618,
+        "macro_r": 0.755
       },
       "coverage_containment": {
-        "support": 171,
-        "c": 164,
-        "fp": 68,
-        "fn": 7,
-        "p": 0.696,
-        "r": 0.959,
-        "f1": 0.807,
-        "f2": 0.892,
-        "macro_f1": 0.652,
-        "macro_r": 0.833
+        "support": 189,
+        "c": 174,
+        "fp": 58,
+        "fn": 15,
+        "p": 0.741,
+        "r": 0.921,
+        "f1": 0.821,
+        "f2": 0.878,
+        "macro_f1": 0.618,
+        "macro_r": 0.705
       },
       "type_strict": {
-        "support": 171,
-        "c": 134,
-        "fp": 90,
-        "fn": 37,
-        "p": 0.598,
-        "r": 0.784,
-        "f1": 0.678,
-        "f2": 0.738,
-        "macro_f1": 0.529,
-        "macro_r": 0.617
+        "support": 189,
+        "c": 139,
+        "fp": 85,
+        "fn": 50,
+        "p": 0.621,
+        "r": 0.735,
+        "f1": 0.673,
+        "f2": 0.709,
+        "macro_f1": 0.469,
+        "macro_r": 0.498
       },
       "type_relaxed": {
-        "support": 171,
-        "c": 160,
-        "fp": 72,
-        "fn": 11,
-        "p": 0.679,
-        "r": 0.936,
-        "f1": 0.787,
-        "f2": 0.87,
-        "macro_f1": 0.595,
-        "macro_r": 0.685
+        "support": 189,
+        "c": 165,
+        "fp": 67,
+        "fn": 24,
+        "p": 0.701,
+        "r": 0.873,
+        "f1": 0.778,
+        "f2": 0.832,
+        "macro_f1": 0.535,
+        "macro_r": 0.566
       },
       "coverage_relaxed_per_type": {
         "AGE": {
@@ -1807,8 +1807,8 @@
           "f2": 1.0
         },
         "ID": {
-          "support": 1,
-          "c": 1,
+          "support": 2,
+          "c": 2,
           "fp": 3,
           "fn": 0,
           "p": 0.0,
@@ -1817,24 +1817,24 @@
           "f2": 0.0
         },
         "LOCATION": {
-          "support": 7,
-          "c": 7,
+          "support": 9,
+          "c": 8,
           "fp": 5,
-          "fn": 0,
+          "fn": 1,
           "p": 0.615,
-          "r": 1.0,
-          "f1": 0.762,
-          "f2": 0.889
+          "r": 0.889,
+          "f1": 0.727,
+          "f2": 0.816
         },
         "MEDICATION": {
           "support": 4,
           "c": 1,
-          "fp": 5,
+          "fp": 4,
           "fn": 3,
-          "p": 0.167,
+          "p": 0.333,
           "r": 0.25,
-          "f1": 0.2,
-          "f2": 0.227
+          "f1": 0.286,
+          "f2": 0.263
         },
         "MODALITY": {
           "support": 0,
@@ -1857,56 +1857,56 @@
           "f2": 0.769
         },
         "PERSON": {
-          "support": 132,
-          "c": 132,
-          "fp": 43,
+          "support": 137,
+          "c": 137,
+          "fp": 34,
           "fn": 0,
-          "p": 0.744,
+          "p": 0.798,
           "r": 1.0,
-          "f1": 0.853,
-          "f2": 0.936
+          "f1": 0.887,
+          "f2": 0.952
         },
         "PHONE": {
-          "support": 1,
+          "support": 2,
           "c": 1,
           "fp": 0,
-          "fn": 0,
+          "fn": 1,
           "p": 1.0,
-          "r": 1.0,
-          "f1": 1.0,
-          "f2": 1.0
+          "r": 0.5,
+          "f1": 0.667,
+          "f2": 0.556
         },
         "PROFESSION": {
-          "support": 3,
-          "c": 2,
+          "support": 12,
+          "c": 6,
           "fp": 1,
-          "fn": 1,
+          "fn": 6,
           "p": 0.667,
-          "r": 0.667,
-          "f1": 0.667,
-          "f2": 0.667
+          "r": 0.5,
+          "f1": 0.571,
+          "f2": 0.526
         }
       },
       "entity_level": {
-        "protected": 32,
-        "total": 37,
-        "entity_recall": 0.865,
+        "protected": 34,
+        "total": 43,
+        "entity_recall": 0.791,
         "by_class": {
           "direct": {
-            "protected": 14,
-            "total": 14,
-            "recall": 1.0
+            "protected": 16,
+            "total": 17,
+            "recall": 0.941
           },
           "quasi": {
             "protected": 18,
-            "total": 23,
-            "recall": 0.783
+            "total": 26,
+            "recall": 0.692
           }
         },
         "by_type": {
           "PERSON": {
-            "protected": 8,
-            "total": 8,
+            "protected": 9,
+            "total": 9,
             "recall": 1.0
           },
           "DATE": {
@@ -1914,19 +1914,19 @@
             "total": 11,
             "recall": 0.909
           },
-          "PHONE": {
-            "protected": 1,
-            "total": 1,
-            "recall": 1.0
-          },
-          "EMAIL": {
+          "ID": {
             "protected": 2,
             "total": 2,
             "recall": 1.0
           },
-          "ID": {
+          "PHONE": {
             "protected": 1,
-            "total": 1,
+            "total": 2,
+            "recall": 0.5
+          },
+          "EMAIL": {
+            "protected": 2,
+            "total": 2,
             "recall": 1.0
           },
           "MEDICATION": {
@@ -1936,8 +1936,8 @@
           },
           "PROFESSION": {
             "protected": 1,
-            "total": 2,
-            "recall": 0.5
+            "total": 4,
+            "recall": 0.25
           },
           "ORG": {
             "protected": 4,
@@ -1946,8 +1946,8 @@
           },
           "LOCATION": {
             "protected": 4,
-            "total": 4,
-            "recall": 1.0
+            "total": 5,
+            "recall": 0.8
           },
           "AGE": {
             "protected": 1,

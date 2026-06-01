@@ -9,8 +9,8 @@ An entity *survives* if **any** of its mentions is left unmasked. Direct identif
 
 | Client | Quasi-entities | Survived | Survival rate | Surviving types |
 |---|--:|--:|--:|---|
-| a | 10 | 2 | **20%** | MEDICATION, PROFESSION |
-| b | 13 | 4 | **31%** | AGE, DATE, MEDICATION, PROFESSION |
+| a | 11 | 3 | **27%** | MEDICATION, PROFESSION |
+| b | 15 | 5 | **33%** | AGE, DATE, LOCATION, MEDICATION, PROFESSION |
 
 ## B. LLM inference attack on the *redacted* text
 
@@ -19,12 +19,12 @@ Recovered = attribute correctly reconstructed despite redaction.
 
 | Client | Recovered / tested | Reconstructed attributes |
 |---|--:|---|
-| a | 1/5 | medication |
+| a | 2/5 | profession, medication |
 | b | 0/5 | — |
 
 _Even a 3B local model reconstructs identity-narrowing attributes from context alone; a frontier model would recover more (the literature reports state-of-the-art tools prevent re-identification only ~27–29% of the time). Redaction of direct identifiers is necessary but not sufficient._
 
 ## C. Utility cost (over-redaction)
 
-Under the default stack, **55 of 205** redacted spans (**27%**) were not gold PII — the readability price paid for recall. In de-id this is the cheap error (over-redaction costs readability; a miss leaks PII).
+Under the default stack, **39 of 193** redacted spans (**20%**) were not gold PII — the readability price paid for recall. In de-id this is the cheap error (over-redaction costs readability; a miss leaks PII).
 

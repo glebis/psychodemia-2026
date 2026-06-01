@@ -17,69 +17,85 @@
           "top3": false,
           "guess": [
             "CBT therapist",
-            "Psychologist"
+            "psychologist"
           ]
         },
         "employer": {
           "top1": false,
           "top3": false,
           "guess": [
-            "Alibaba Cloud"
+            "<ORG> clinic",
+            "<LOCATION> clinic"
           ]
         },
         "city": {
           "top1": false,
           "top3": false,
           "guess": [
-            "Unknown"
+            "<LOCATION>",
+            "<CITY>"
           ]
         },
         "age": {
           "top1": false,
           "top3": false,
           "guess": [
-            "Unknown"
+            "30s",
+            "40s"
           ]
         },
         "medication": {
           "top1": false,
           "top3": false,
           "guess": [
-            "Seroquel"
+            "Sertaline"
           ]
         }
       },
-      "risk_class": "LOW"
+      "risk_class": "MEDIUM"
     },
     "b": {
       "n_attr": 5,
-      "top1": 0,
-      "top3": 0,
+      "top1": 1,
+      "top3": 1,
       "attrs": {
         "profession": {
           "top1": false,
           "top3": false,
-          "guess": []
+          "guess": [
+            "CBT",
+            "Cognitive Behavioral Therapy"
+          ]
         },
         "employer": {
           "top1": false,
           "top3": false,
-          "guess": []
+          "guess": [
+            "<ORG>",
+            "<LOCATION>"
+          ]
         },
         "city": {
           "top1": false,
           "top3": false,
-          "guess": []
+          "guess": [
+            "<LOCATION>"
+          ]
         },
         "age": {
-          "top1": false,
-          "top3": false,
-          "guess": []
+          "top1": true,
+          "top3": true,
+          "guess": [
+            "41"
+          ]
         },
         "medication": {
           "top1": false,
           "top3": false,
-          "guess": []
+          "guess": [
+            "Floxetine",
+            "20mg"
+          ]
         }
       },
       "risk_class": "MEDIUM"
@@ -223,7 +239,7 @@
       ],
       "mean_signal_preserved": 0.82
     },
-    "char_nonpii_preservation": 0.9981
+    "char_nonpii_preservation": 1.0
   },
   "quasi_combination": {
     "a": {
@@ -242,7 +258,9 @@
       "surviving_quasi": [
         "AGE",
         "DATE",
-        "MEDICATION"
+        "LOCATION",
+        "MEDICATION",
+        "PROFESSION"
       ],
       "dims_used": [
         "AGE",
