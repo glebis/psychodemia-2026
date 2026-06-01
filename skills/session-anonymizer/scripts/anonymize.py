@@ -2,7 +2,9 @@
 """Three-layer PII anonymization for therapy transcripts.
 
 Layer 1: Natasha (Russian NER — names, locations, orgs)
-Layer 2: OpenAI Privacy Filter (phones, accounts, addresses)
+Layer 2: Deterministic regex (emails/URLs via scrubadub, phones via
+         libphonenumber, structured IDs via regex) — replaces OpenAI
+         Privacy Filter; instant, no model download
 Layer 3: Local LLM via Ollama (medications, dates, contextual IDs)
 
 All layers run locally by default. No data leaves the machine.
@@ -64,36 +66,100 @@ def run_natasha(text: str) -> list[Span]:
     return spans
 
 
-def run_opf(text: str) -> list[Span]:
-    """Layer 2: OpenAI Privacy Filter."""
+import re
+
+# Structured identifiers: policy / account / card-like grouped digit runs,
+# e.g. 7722-4455-8811, 1234 5678 9012 3456. Phone-shaped groupings are left
+# to libphonenumber below; merge_spans resolves any overlap.
+_ID_PATTERN = re.compile(r"\b\d{4}[\s-]\d{4}[\s-]\d{2,4}(?:[\s-]\d{2,4})?\b")
+
+# Numeric dates: DD.MM.YYYY / DD/MM/YYYY / ISO YYYY-MM-DD. Dates are PHI under
+# HIPAA and were the one type no NER/LLM layer caught (the benchmark showed OPF's
+# whole RU advantage was dates) — a trivial regex recovers it at regex speed.
+# Spelled-out dates ("15 января") still fall to the LLM layer.
+# Validated numeric dates: DD.MM.YYYY / DD/MM/YYYY / ISO YYYY-MM-DD(THH:MM). Day
+# 1-31, month 1-12 (rejects 99.99.9999). Optional ISO time so 1984-08-08T00:00 is
+# not split by a premature \b. Spelled-out dates remain the LLM layer's job.
+_DATE_PATTERN = re.compile(
+    r"\b(?:(?:0?[1-9]|[12]\d|3[01])[.\/](?:0?[1-9]|1[0-2])[.\/]\d{2,4}"
+    r"|\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])(?:T\d{2}:\d{2}(?::\d{2})?)?)\b")
+
+# Russian structured identifiers (PII-Bench RU taxonomy). SNILS has a distinctive
+# XXX-XXX-XXX XX shape; passport is 4+6 digits. INN is context-gated (a bare 10/12
+# digit run collides with timestamps/phones/case numbers — Codex audit #6), so it is
+# only matched when an "ИНН" cue precedes it; the captured group is the digits.
+_SNILS_PATTERN = re.compile(r"\b\d{3}-\d{3}-\d{3}[ -]\d{2}\b")
+_PASSPORT_PATTERN = re.compile(r"\b\d{4}\s\d{6}\b")
+_INN_PATTERN = re.compile(r"(?i)\bИНН\D{0,12}(\d{12}|\d{10})\b")
+# Social handles / messenger links: @handle, t.me/x, vk.com/id, instagram, www.
+# Case-insensitive domains; path must not end on a dot (trailing punctuation trimmed).
+_HANDLE_PATTERN = re.compile(
+    r"(?i)(?:(?:https?://)?(?:www\.)?(?:t\.me|vk\.com|instagram\.com|wa\.me)/[\w./+]*[\w/+]"
+    r"|(?<!\w)@[A-Za-z][\w.]*[A-Za-z0-9])")
+
+
+def run_regex(text: str) -> list[Span]:
+    """Layer 2: deterministic PII — emails, URLs, phones, structured IDs.
+
+    Replaces the OpenAI Privacy Filter (a 2.8 GB transformer that ran per-line
+    inference on CPU). These targets are format-bound, so pattern matching is
+    instant, deterministic, and needs no model download. Names/locations are
+    already covered by Natasha (Layer 1).
+
+      - emails / URLs : scrubadub deterministic detectors
+      - phones        : Google libphonenumber (region RU), validated
+      - structured IDs: regex (policy / account / card number groupings)
+
+    Each sub-detector is optional; a missing dependency is skipped silently.
+    """
+    spans = []
+
+    # Emails and URLs via scrubadub (instantiate detectors directly to avoid
+    # enabling the EN-centric name detector — Natasha owns Russian names).
     try:
-        result = subprocess.run(
-            ["opf", "redact", "--device", "cpu", "--format", "json",
-             "--no-print-color-coded-text", "--json-indent", "0"],
-            input=text, capture_output=True, text=True, timeout=120
-        )
-        if result.returncode != 0:
-            return []
+        from scrubadub.detectors.email import EmailDetector
+        for f in EmailDetector().iter_filth(text):
+            spans.append(Span(start=f.beg, end=f.end, text=f.text,
+                              label="EMAIL", source="scrubadub"))
+    except ImportError:
+        pass
+    try:
+        from scrubadub.detectors.url import UrlDetector
+        for f in UrlDetector().iter_filth(text):
+            spans.append(Span(start=f.beg, end=f.end, text=f.text,
+                              label="URL", source="scrubadub"))
+    except ImportError:
+        pass
 
-        output = result.stdout.strip()
-        json_start = output.find("{")
-        if json_start == -1:
-            return []
-        try:
-            data = json.loads(output[json_start:])
-        except json.JSONDecodeError:
-            return []
+    # Phones via libphonenumber, anchored to Russian region for bare numbers.
+    try:
+        import phonenumbers
+        for m in phonenumbers.PhoneNumberMatcher(text, "RU"):
+            spans.append(Span(start=m.start, end=m.end, text=m.raw_string,
+                              label="PHONE", source="phonenumbers"))
+    except ImportError:
+        pass
 
-        spans = []
-        for s in data.get("detected_spans", []):
-            spans.append(Span(
-                start=s["start"], end=s["end"],
-                text=s["text"], label=s["label"].upper(),
-                source="opf"
-            ))
-        return spans
-    except (subprocess.TimeoutExpired, FileNotFoundError, json.JSONDecodeError):
-        return []
+    # Structured identifiers (policy / account / card numbers).
+    for m in _ID_PATTERN.finditer(text):
+        spans.append(Span(start=m.start(), end=m.end(), text=m.group(),
+                          label="ID", source="regex"))
+
+    # Numeric dates (PHI). Spelled-out dates remain the LLM layer's job.
+    for m in _DATE_PATTERN.finditer(text):
+        spans.append(Span(start=m.start(), end=m.end(), text=m.group(),
+                          label="DATE", source="regex"))
+
+    # Russian structured identifiers + social handles. merge_spans resolves overlaps.
+    # `grp` selects which capture group is the actual identifier span (INN gates on a
+    # preceding "ИНН" cue but only the digits should be redacted).
+    for pat, label, grp in ((_SNILS_PATTERN, "ID", 0), (_PASSPORT_PATTERN, "ID", 0),
+                            (_INN_PATTERN, "ID", 1), (_HANDLE_PATTERN, "URL", 0)):
+        for m in pat.finditer(text):
+            spans.append(Span(start=m.start(grp), end=m.end(grp), text=m.group(grp),
+                              label=label, source="regex"))
+
+    return spans
 
 
 def run_ollama(text: str, model: str = "qwen2.5:3b") -> list[Span]:
@@ -102,7 +168,11 @@ def run_ollama(text: str, model: str = "qwen2.5:3b") -> list[Span]:
     try:
         import urllib.request
 
-        prompt = 'Extract ALL PII. Include MEDICATIONS with dosages. Return ONLY JSON array [{\"text\":\"...\",\"type\":\"PERSON|LOCATION|ORG|PHONE|DATE|ADDRESS|MEDICATION|ID\"}]. No explanations.\n\nText: ' + text
+        prompt = ('Extract ALL PII, including quasi-identifiers that narrow identity. '
+                  'Include MEDICATIONS with dosages, AGES (also spelled-out, e.g. "тридцать четыре года"), '
+                  'and PROFESSIONS/occupations. Return ONLY JSON array '
+                  '[{\"text\":\"...\",\"type\":\"PERSON|LOCATION|ORG|PHONE|DATE|ADDRESS|MEDICATION|ID|AGE|PROFESSION\"}]. '
+                  'No explanations.\n\nText: ' + text)
 
         payload = json.dumps({
             "model": model,
@@ -130,30 +200,41 @@ def run_ollama(text: str, model: str = "qwen2.5:3b") -> list[Span]:
 
         entities = json.loads(match.group())
         spans = []
+        seen = set()  # de-dupe (start,end) across entities
+        low = text.lower()
         for ent in entities:
-            ent_text = ent.get("text", "")
-            idx = text.find(ent_text)
-            if idx == -1:
-                for i in range(max(0, len(text) - len(ent_text) + 1)):
-                    if text[i:i+len(ent_text)].lower() == ent_text.lower():
-                        idx = i
-                        break
-            if idx == -1:
-                for stem in [ent_text[:max(3, len(ent_text)-2)]]:
-                    pos = text.lower().find(stem.lower())
-                    if pos >= 0:
-                        end_pos = min(pos + len(ent_text) + 5, len(text))
-                        word_end = text.find(" ", pos + len(stem))
-                        if word_end == -1:
-                            word_end = end_pos
-                        idx = pos
-                        ent_text = text[pos:word_end]
-                        break
-            if idx >= 0:
+            ent_text = (ent.get("text") or "").strip()
+            label = ent.get("type", "UNKNOWN")
+            if len(ent_text) < 2:
+                continue
+            # Emit a span for EVERY occurrence of the returned value (the model returns
+            # each value once, but redaction must cover all mentions). Case-insensitive,
+            # so repeated mentions no longer all collapse onto the first via text.find().
+            occ = [m.start() for m in re.finditer(re.escape(ent_text.lower()), low)]
+            if not occ:
+                # morphological fallback: match the stem at a word start and extend
+                # over the whole word (handles RU inflection, e.g. Москва→Москве).
+                # Emit ALL such occurrences, stopping the span at the word boundary
+                # rather than the next ASCII space (Codex audit #3/#4).
+                stem = ent_text[:max(3, len(ent_text) - 2)]
+                if len(stem) >= 3:
+                    for m in re.finditer(r"(?<!\w)" + re.escape(stem) + r"\w*", text, re.IGNORECASE):
+                        key = (m.start(), m.end())
+                        if key in seen or m.end() - m.start() < 2:
+                            continue
+                        seen.add(key)
+                        spans.append(Span(start=m.start(), end=m.end(), text=m.group(),
+                                          label=label, source="ollama", confidence=0.85))
+                continue
+            for idx in occ:
+                key = (idx, idx + len(ent_text))
+                if key in seen:
+                    continue
+                seen.add(key)
                 spans.append(Span(
                     start=idx, end=idx + len(ent_text),
-                    text=ent_text,
-                    label=ent.get("type", "UNKNOWN"),
+                    text=text[idx:idx + len(ent_text)],
+                    label=label,
                     source="ollama",
                     confidence=0.85
                 ))
@@ -245,7 +326,11 @@ def anonymize(text: str, layers: list[str] = None, model: str = "qwen2.5:3b",
               pseudonyms: bool = False) -> AnonymizationResult:
     """Run all anonymization layers and produce result."""
     if layers is None:
-        layers = ["natasha", "ollama", "opf"]
+        layers = ["natasha", "ollama", "regex"]
+
+    # "opf" is a deprecated alias for the deterministic "regex" layer that
+    # replaced the OpenAI Privacy Filter.
+    layers = ["regex" if l == "opf" else l for l in layers]
 
     all_spans = []
     warnings = []
@@ -261,22 +346,12 @@ def anonymize(text: str, layers: list[str] = None, model: str = "qwen2.5:3b",
         all_spans.extend(ollama_spans)
         if not ollama_spans:
             warnings.append("Ollama returned no entities — is the model running?")
-        elif "opf" in layers:
-            try:
-                import urllib.request
-                urllib.request.urlopen(urllib.request.Request(
-                    "http://localhost:11434/api/generate",
-                    data=json.dumps({"model": model, "keep_alive": 0}).encode(),
-                    headers={"Content-Type": "application/json"}
-                ), timeout=5)
-            except Exception:
-                pass
 
-    if "opf" in layers:
-        opf_spans = run_opf(text)
-        all_spans.extend(opf_spans)
-        if not opf_spans:
-            warnings.append("OPF returned no entities — may not be installed or model not downloaded")
+    if "regex" in layers:
+        regex_spans = run_regex(text)
+        all_spans.extend(regex_spans)
+        if not regex_spans:
+            warnings.append("Regex layer found no emails/phones/IDs (none present, or scrubadub/phonenumbers not installed)")
 
     merged = merge_spans(all_spans)
     redacted_text = redact(text, merged, pseudonyms)
@@ -313,9 +388,12 @@ def main():
     parser = argparse.ArgumentParser(description="Three-layer therapy transcript anonymizer")
     parser.add_argument("input", nargs="?", help="Input file (or stdin if omitted)")
     parser.add_argument("-o", "--output", help="Output file (stdout if omitted)")
-    parser.add_argument("--layers", default="natasha,opf,ollama",
-                        help="Comma-separated layers to run (default: natasha,opf,ollama)")
-    parser.add_argument("--model", default="qwen3:4b", help="Ollama model (default: qwen3:4b)")
+    parser.add_argument("--layers", default="natasha,regex,ollama",
+                        help="Comma-separated layers to run (default: natasha,regex,ollama). "
+                        "'opf' is accepted as a deprecated alias for 'regex'.")
+    parser.add_argument("--model", default="qwen2.5:3b", help="Ollama model (default: qwen2.5:3b). "
+                        "Use a non-reasoning model: qwen3 routes output to a separate 'thinking' "
+                        "field and exhausts num_predict before emitting JSON, yielding no entities.")
     parser.add_argument("--pseudonyms", action="store_true", help="Use consistent pseudonyms instead of tags")
     parser.add_argument("--json", action="store_true", help="Output full JSON report")
     parser.add_argument("--encrypt", metavar="PASSWORD", help="Encrypt output with AES-256")

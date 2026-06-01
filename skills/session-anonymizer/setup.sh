@@ -4,19 +4,8 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-echo "==> Layer 1: Natasha (Russian NER)"
+echo "==> Layers 1 & 2: Natasha (Russian NER) + scrubadub + phonenumbers (deterministic regex)"
 pip install -r requirements.txt
-
-echo "==> Layer 2: OpenAI Privacy Filter (opf CLI) — installed from source (no PyPI package)"
-if command -v opf >/dev/null 2>&1; then
-  echo "    opf already on PATH — skipping"
-else
-  PF_DIR="${HOME}/.local/share/privacy-filter"
-  if [ ! -d "${PF_DIR}/.git" ]; then
-    git clone --depth 1 https://github.com/openai/privacy-filter.git "${PF_DIR}"
-  fi
-  pip install -e "${PF_DIR}"   # OpenAI Privacy Filter, Apr 2026, Apache-2.0. Provides `opf redact`.
-fi
 
 echo "==> Layer 3: Ollama model (medications / dates / contextual IDs)"
 if command -v ollama >/dev/null 2>&1; then
@@ -26,5 +15,5 @@ else
 fi
 
 echo "==> Done. Verify: python3 scripts/anonymize.py --help"
-echo "    Memory note: opf (2.8 GB) + an Ollama model don't coexist on 16 GB — use"
-echo "    --layers natasha,ollama  OR  --layers natasha,opf. All three need ~32 GB."
+echo "    Layers 1 & 2 are lightweight (tens of MB, instant); only the Ollama model needs real RAM."
+echo "    Fast deterministic pass with no LLM: --layers natasha,regex"

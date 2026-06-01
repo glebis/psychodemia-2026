@@ -1,0 +1,60 @@
+{
+  "default_combo": "natasha+regex+ollama",
+  "A_quasi_survival": {
+    "a": {
+      "quasi_entities": 10,
+      "survived": 2,
+      "survival_rate": 0.2,
+      "survivors_by_type": [
+        "MEDICATION",
+        "PROFESSION"
+      ]
+    },
+    "b": {
+      "quasi_entities": 13,
+      "survived": 4,
+      "survival_rate": 0.308,
+      "survivors_by_type": [
+        "AGE",
+        "DATE",
+        "MEDICATION",
+        "PROFESSION"
+      ]
+    }
+  },
+  "B_inference_attack": {
+    "a": {
+      "guess": {
+        "profession": "<PROFESSION>",
+        "employer": "<ORG>",
+        "city": "<LOCATION>",
+        "age": "",
+        "medication": "Сертралин 100 мг",
+        "other_clues": "одиночество, матери <PERSON>, партнёр <PERSON>"
+      },
+      "recovered": [
+        "medication"
+      ],
+      "n_recovered": 1,
+      "n_tested": 5
+    },
+    "b": {
+      "guess": {
+        "profession": "<PROFESSION>",
+        "employer": "<ORG>",
+        "city": "<LOCATION>",
+        "age": "",
+        "medication": "<MEDICATION>",
+        "other_clues": "истощение, навешивание ярлыков («неудачник», «бездарь», «лентяй»), обесценивание позитивного (похвала «не считается», успех — «повезло»), предсказание будущего («не сработает»)"
+      },
+      "recovered": [],
+      "n_recovered": 0,
+      "n_tested": 5
+    }
+  },
+  "C_over_redaction": {
+    "redacted_spans": 205,
+    "false_positives": 55,
+    "over_redaction_rate": 0.268
+  }
+}

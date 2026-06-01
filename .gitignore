@@ -17,3 +17,6 @@ briefing/04-current-deck-full.md
 briefing/06-deck-revisions.md
 briefing/GPT-PRO-PACKAGE.md
 briefing/gpt-pro-review.md
+
+# OPF transformers venv (regenerable via eval/requirements.txt)
+eval/.opf-venv/
