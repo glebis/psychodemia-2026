@@ -20,3 +20,6 @@ briefing/gpt-pro-review.md
 
 # OPF transformers venv (regenerable via eval/requirements.txt)
 eval/.opf-venv/
+
+# Generated brand/ad imagery — not versioned (large binary PNGs, exploration only)
+naming/confide-brand/
