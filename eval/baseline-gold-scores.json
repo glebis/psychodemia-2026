@@ -1,0 +1,80 @@
+{
+  "_meta": {
+    "gold": "sessions-ru/pii-eval-ru.jsonl",
+    "docs": 30,
+    "labeled_spans": 713,
+    "match": "relaxed/overlap, type-aware (Philter type-agnostic)",
+    "presidio_model": "ru_core_news_lg",
+    "confide": "regex+natasha (deterministic; no LLM layer)",
+    "date": "2026-06",
+    "note": "Counts/metrics only. CONFIDE leads on F1 after the PHONE/DATE collision fix."
+  },
+  "results": {
+    "CONFIDE (regex+natasha)": {
+      "precision": 0.661,
+      "recall": 0.732,
+      "f1": 0.695,
+      "tp": 522,
+      "fp": 268,
+      "fn": 191,
+      "by_type_recall": {
+        "AGE": 0.3,
+        "DATE": 0.96,
+        "EMAIL": 1.0,
+        "ID": 0.0,
+        "LOCATION": 0.94,
+        "MEDICATION": 0.0,
+        "ORG": 0.75,
+        "PERSON": 0.82,
+        "PHONE": 0.83,
+        "PROFESSION": 0.0
+      }
+    },
+    "Presidio-RU": {
+      "precision": 0.514,
+      "recall": 0.708,
+      "f1": 0.596,
+      "tp": 505,
+      "fp": 477,
+      "fn": 208,
+      "by_type_recall": {
+        "AGE": 0.0,
+        "DATE": 0.96,
+        "EMAIL": 1.0,
+        "ID": 0.0,
+        "LOCATION": 0.94,
+        "MEDICATION": 0.0,
+        "ORG": 0.7,
+        "PERSON": 0.8,
+        "PHONE": 0.83,
+        "PROFESSION": 0.0
+      }
+    },
+    "CONFIDE + Presidio": {
+      "precision": 0.573,
+      "recall": 0.743,
+      "f1": 0.647,
+      "tp": 530,
+      "fp": 395,
+      "fn": 183,
+      "by_type_recall": {
+        "AGE": 0.3,
+        "DATE": 0.96,
+        "EMAIL": 1.0,
+        "ID": 0.0,
+        "LOCATION": 0.94,
+        "MEDICATION": 0.0,
+        "ORG": 0.75,
+        "PERSON": 0.83,
+        "PHONE": 0.83,
+        "PROFESSION": 0.0
+      }
+    },
+    "Philter (typeless)": {
+      "precision": 0.014,
+      "recall": 0.083,
+      "f1": 0.023,
+      "note": "English-only; unusable on RU; requires py-regex patch to load on 3.13"
+    }
+  }
+}

@@ -156,19 +156,40 @@ Each line:
 
 ---
 
-## For RUSSIAN transcripts — use Presidio + spaCy instead
+## Presidio & Philter on Russian — measured, not assumed
 
-The OpenAI Privacy Filter is **English-first and weak on Russian**, which is the
-whole reason this eval is English-only. For Russian session transcripts we use
-**Microsoft Presidio** with a Russian spaCy NER model:
+> **Correction (2026-06):** earlier revisions *cited* Presidio/Philter as methodology
+> and a prior draft of this section *recommended* Presidio over the CONFIDE stack for
+> Russian — but the comparators were **never actually run**. They have now been wired
+> up (`eval/baseline_compare.py`, `eval/score_baselines.py`) and scored on the labeled
+> RU gold (30 docs, 713 spans; relaxed/overlap match). The recommendation was **wrong**.
+
+| Engine | Precision | Recall | F1 |
+|---|---|---|---|
+| **CONFIDE (regex + Natasha)** | **0.661** | **0.732** | **0.695** |
+| CONFIDE + Presidio (ensemble) | 0.573 | 0.743 | 0.647 |
+| Presidio-RU (`ru_core_news_lg`) | 0.514 | 0.708 | 0.596 |
+| Philter (philter-ucsf, typeless) | 0.014 | 0.083 | 0.023 |
+
+**Findings:**
+- **Philter is unusable on Russian** (recall 0.083). Its name detection is English
+  blacklists + NLTK English POS, and the pip package doesn't even import on Python 3.13
+  without patching its regex filters. Rejected.
+- **Presidio works on Russian** (with a `ru_core_news_*` model — Natasha is CONFIDE's
+  own RU NER and does **not** use spaCy). But it does **not** beat CONFIDE: after fixing
+  a PHONE/DATE collision in CONFIDE (numeric dates were mis-tagged PHONE → DATE recall
+  0.0→0.96), CONFIDE alone leads on F1. Presidio adds only **+0.01 recall** at a large
+  precision cost, so it ships as an **opt-in ensemble layer** (`"presidio"` in
+  `layers`), off by default.
+- **spaCy model size barely matters here:** `ru_core_news_sm` and `ru_core_news_lg`
+  gave identical Presidio recall (0.708); `lg` only improved ensemble precision.
+- **Remaining gaps for the deterministic stack** (need the LLM layer or dedicated
+  recognizers): MEDICATION 0.0, PROFESSION 0.0, ID 0.0, AGE 0.3.
 
 ```bash
-pip install presidio-analyzer presidio-anonymizer spacy
+# reproduce:
+pip install presidio-analyzer spacy philter-ucsf
 python -m spacy download ru_core_news_lg
+python3 eval/score_baselines.py --presidio-model ru_core_news_lg   # gold P/R/F1
+python3 eval/baseline_compare.py                                   # stats-only diff on a corpus
 ```
-
-Presidio combines `ru_core_news_lg` NER (names, locations, orgs) with regex/
-checksum recognizers (phones, emails, IBANs, etc.) and is configurable per
-language — a better fit for Russian than the English-tuned filter. The same
-`score.py` methodology (entity-level, recall-weighted F2, strict + relaxed)
-applies; only the detector and the language model change.
